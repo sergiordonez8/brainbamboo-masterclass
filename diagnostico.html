@@ -361,7 +361,9 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
 
   $('startBtn').onclick = function () {
     if (!ctx.wa && !ctx.correo) {
-      var c = $('fCorreo').value.trim().toLowerCase();
+      var c = $('fCorreo').value.trim().toLowerCase(), nm = $('fNombre').value.trim();
+      $('fNombre').style.borderColor = ''; $('fCorreo').style.borderColor = '';
+      if (nm.length < 2) { $('fNombre').focus(); $('fNombre').style.borderColor = '#C8352E'; return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c)) { $('fCorreo').focus(); $('fCorreo').style.borderColor = '#C8352E'; return; }
       ctx.correo = c; ctx.nombre = $('fNombre').value.trim();
     }
