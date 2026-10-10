@@ -7,7 +7,7 @@
 <title>Tu diagnóstico cerebral · BrainBamboo</title>
 <meta name="description" content="Diagnóstico inicial de cómo está tu cerebro hoy. Antes de la clase Suelta el freno de mano.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Poppins:wght@300&amp;display=swap">
-<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');(function(){var q=new URLSearchParams(location.search),ph=(q.get('wa')||q.get('phone')||'').replace(/[^0-9]/g,''),fn=(q.get('n')||q.get('nombre')||'').trim().split(' ')[0].toLowerCase(),am={};if(ph)am.ph=ph;if(fn)am.fn=fn;fbq('init','1663305672064330',am);fbq('track','PageView');})();</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');(function(){var q=new URLSearchParams(location.search),ph=(q.get('wa')||q.get('phone')||'').replace(/[^0-9]/g,''),fn=(q.get('n')||q.get('nombre')||'').trim().split(' ')[0].toLowerCase(),em=(q.get('e')||q.get('correo')||'').trim().toLowerCase(),am={};if(ph)am.ph=ph;if(fn)am.fn=fn;if(em)am.em=em;fbq('init','1663305672064330',am);fbq('track','PageView');})();</script>
 
 <style>
 :root{--ground:#F6F2E7;--ink:#1F3428;--green:#2F6B4A;--deep:#1F3428;--muted:#5C6B60;--soft:#6F8B78;--line:#DCD5C2;--card:#FFFFFF;--mint:#E6ECDF;--gold:#D2A138;--red:#C8352E;color-scheme:light}
@@ -118,7 +118,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
   </ol>
   <div id="idFields" class="hide">
     <div class="field"><label for="fNombre">Tu nombre</label><input id="fNombre" autocomplete="given-name" placeholder="Tu nombre"></div>
-    <div class="field"><label for="fWa">Tu WhatsApp (con indicativo)</label><input id="fWa" type="tel" inputmode="tel" autocomplete="tel" placeholder="+57 300 000 0000"></div>
+    <div class="field"><label for="fCorreo">El correo con el que te registraste</label><input id="fCorreo" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="tu@correo.com"></div>
   </div>
   <button class="btn gold" id="startBtn">Empezar mi diagnóstico</button>
   <p class="fine">Tus respuestas son confidenciales y solo las usa el equipo de BrainBamboo para preparar la clase.</p>
@@ -202,9 +202,10 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
     id: qs.get('id') || '',
     wa: (qs.get('wa') || qs.get('phone') || '').replace(/[^0-9]/g, ''),
     nombre: qs.get('n') || qs.get('nombre') || '',
+    correo: (qs.get('e') || qs.get('correo') || '').trim().toLowerCase(),
     utm_source: qs.get('utm_source') || '', utm_campaign: qs.get('utm_campaign') || '', utm_content: qs.get('utm_content') || ''
   };
-  if (!ctx.wa) document.getElementById('idFields').classList.remove('hide');
+  if (!ctx.wa && !ctx.correo) document.getElementById('idFields').classList.remove('hide');
 
   // ---------- Encuesta de cualificación (puntos para calidad de lead) ----------
   var SURVEY = [
@@ -340,10 +341,10 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
   }
 
   $('startBtn').onclick = function () {
-    if (!ctx.wa) {
-      var w = $('fWa').value.replace(/[^0-9]/g, '');
-      if (w.length < 8) { $('fWa').focus(); $('fWa').style.borderColor = '#C8352E'; return; }
-      ctx.wa = w; ctx.nombre = $('fNombre').value.trim();
+    if (!ctx.wa && !ctx.correo) {
+      var c = $('fCorreo').value.trim().toLowerCase();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c)) { $('fCorreo').focus(); $('fCorreo').style.borderColor = '#C8352E'; return; }
+      ctx.correo = c; ctx.nombre = $('fNombre').value.trim();
     }
     if (window.fbq) try { fbq('trackCustom', 'EncuestaInicio'); } catch (e) {}
     pos = 0; render();
@@ -375,7 +376,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
     var label = function (q, a) { return q.multi ? (a || []).map(function (i) { return q.o[i][0]; }).join(' | ') : q.o[a][0]; };
     var data = new URLSearchParams();
     data.append('tipo', 'diagnostico');
-    data.append('id', ctx.id); data.append('whatsapp', ctx.wa); data.append('nombre', ctx.nombre);
+    data.append('id', ctx.id); data.append('whatsapp', ctx.wa); data.append('correo', ctx.correo); data.append('nombre', ctx.nombre);
     SURVEY.forEach(function (q) { data.append(q.k, label(q, answers[q.k])); });
     data.append('calidad', calidad); data.append('categoria', cat);
     order.forEach(function (k) { data.append(k, Math.round(dim[k] / 9 * 100)); });
