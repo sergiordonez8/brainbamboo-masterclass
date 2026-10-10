@@ -346,7 +346,7 @@ document.querySelectorAll('form').forEach(function (f) {
     Object.keys(p).forEach(function (k) { data.append(k, p[k]); });
     data.append('pagina', window.location.href);
     var go = function () { window.location.assign("gracias.html" + window.location.search); };
-    if (window.fbq) { try { fbq('track', 'Lead'); } catch (err) {} }
+    try { sessionStorage.setItem('bb_lead', '1'); } catch (err) {}
     if (!ENDPOINT) { go(); return; }
     var done = false, finish = function () { if (!done) { done = true; go(); } };
     try {
