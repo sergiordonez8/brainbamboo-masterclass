@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Tu diagnóstico cerebral · Brain Bamboo</title>
+<meta name="description" content="Diagnóstico inicial de cómo está tu cerebro hoy. Antes de la clase Suelta el freno de mano.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');(function(){var q=new URLSearchParams(location.search),ph=(q.get('wa')||q.get('phone')||'').replace(/[^0-9]/g,''),fn=(q.get('n')||q.get('nombre')||'').trim().split(' ')[0].toLowerCase(),am={};if(ph)am.ph=ph;if(fn)am.fn=fn;fbq('init','1663305672064330',am);fbq('track','PageView');})();</script>
+
+<style>
+:root{--ground:#F6F2E7;--ink:#1F3428;--green:#2F6B4A;--deep:#1F3428;--muted:#5C6B60;--soft:#6F8B78;--line:#DCD5C2;--card:#FFFFFF;--mint:#E6ECDF;--gold:#D2A138;--red:#C8352E;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ground);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+.top{position:sticky;top:0;z-index:5;background:rgba(246,242,231,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(31,52,40,.08)}
+.top-in{max-width:680px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:700;font-size:15px;letter-spacing:-.01em}
+.step-lbl{font-size:12px;font-weight:600;color:var(--soft);white-space:nowrap}
+.bar{height:3px;background:rgba(31,52,40,.08)}
+.bar i{display:block;height:100%;width:0;background:var(--green);transition:width .35s ease}
+main{max-width:680px;margin:0 auto;padding:28px 20px 64px}
+.screen{display:none;animation:in .35s ease}
+.screen.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--green);background:var(--mint);padding:6px 12px;border-radius:999px}
+h1{font-size:clamp(32px,8.4vw,52px);line-height:1.04;letter-spacing:-.035em;margin:18px 0 14px;font-weight:800}
+h1 span,h2 span{color:var(--soft)}
+h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margin:10px 0 8px;font-weight:700}
+.lead{font-size:clamp(17px,4.4vw,19px);line-height:1.5;color:var(--muted);margin:0 0 22px}
+.steps{display:grid;gap:10px;margin:22px 0 26px;padding:0;list-style:none}
+.steps li{display:flex;gap:14px;align-items:flex-start;background:var(--card);border-radius:16px;padding:16px 18px;box-shadow:0 1px 0 rgba(31,52,40,.04)}
+.steps b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--green);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.steps p{margin:3px 0 0;font-size:15px;line-height:1.45;color:var(--muted)}
+.steps strong{color:var(--ink);font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;background:var(--green);color:#fff;font-weight:700;font-size:17px;padding:17px 28px;min-height:56px;width:100%;text-decoration:none;transition:transform .15s ease,opacity .15s}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.35;cursor:default}
+.btn.gold{background:var(--gold);color:var(--deep)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid rgba(31,52,40,.18)}
+.btn.wa{background:#25D366;color:#0B2E1A}
+.fine{font-size:12.5px;line-height:1.5;color:var(--soft);margin:14px 0 0;text-align:center}
+.field{display:grid;gap:6px;margin:0 0 14px}
+.field label{font-size:13px;font-weight:600}
+.field input{width:100%;font:inherit;font-size:17px;padding:15px 16px;border-radius:14px;border:1.5px solid var(--line);background:#FFFDF8;color:var(--ink)}
+.field input:focus{outline:2px solid var(--green);outline-offset:1px;border-color:transparent}
+.q-meta{font-size:13px;font-weight:600;color:var(--soft);margin:0 0 6px}
+.q-title{font-size:clamp(22px,5.8vw,30px);line-height:1.18;letter-spacing:-.025em;font-weight:700;margin:0 0 8px}
+.q-help{font-size:15px;color:var(--muted);margin:0 0 18px;line-height:1.45}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1.5px solid transparent;border-radius:16px;padding:16px 18px;font-size:16.5px;line-height:1.35;color:var(--ink);box-shadow:0 1px 0 rgba(31,52,40,.05);transition:border-color .15s,background .15s}
+.opt:hover{border-color:rgba(47,107,74,.35)}
+.opt .dot{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid #C9C2AE;display:inline-flex;align-items:center;justify-content:center}
+.opt.multi .dot{border-radius:7px}
+.opt.sel{border-color:var(--green);background:#F1F6EE}
+.opt.sel .dot{background:var(--green);border-color:var(--green)}
+.opt.sel .dot::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+.opt.multi.sel .dot::after{width:10px;height:6px;border-radius:0;background:none;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.scale{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.scale .opt{flex-direction:column;justify-content:center;text-align:center;gap:8px;padding:14px 6px;font-size:14px;font-weight:600}
+.scale .opt .n{font-size:22px;font-weight:800;color:var(--soft)}
+.scale .opt.sel .n{color:var(--green)}
+.nav{display:flex;gap:10px;margin-top:22px}
+.nav .btn{width:auto;flex:1}
+.nav .back{flex:0 0 auto;padding:17px 20px}
+.interlude{background:var(--deep);color:#F2EFE6;border-radius:24px;padding:30px 24px;text-align:left}
+.interlude h2{color:#fff}
+.interlude p{color:#B9C6BB;line-height:1.5;font-size:16.5px;margin:0 0 18px}
+.loading{text-align:center;padding:60px 0}
+.spin{width:54px;height:54px;border-radius:50%;border:4px solid var(--mint);border-top-color:var(--green);margin:0 auto 22px;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* resultado */
+.res-card{background:var(--card);border-radius:24px;padding:26px 22px;margin:0 0 16px;box-shadow:0 20px 50px rgba(31,52,40,.08)}
+.gauge{display:block;width:100%;max-width:360px;margin:6px auto 0}
+.g-num{text-align:center;margin:-6px 0 2px;font-size:44px;font-weight:800;letter-spacing:-.03em}
+.g-lbl{text-align:center;font-size:14px;font-weight:600;color:var(--soft);margin:0}
+.level{display:block;text-align:center;font-size:clamp(22px,6vw,28px);font-weight:800;letter-spacing:-.02em;margin:14px 0 4px}
+.dims{display:grid;gap:14px;margin:6px 0 0}
+.dim-h{display:flex;justify-content:space-between;font-size:14.5px;font-weight:600;margin:0 0 6px}
+.dim-h span{color:var(--soft);font-weight:700}
+.track{height:10px;border-radius:999px;background:#EEE9DA;overflow:hidden}
+.track i{display:block;height:100%;border-radius:999px;width:0;transition:width 1s ease .2s}
+.profile{background:var(--deep);color:#F2EFE6;border-radius:24px;padding:26px 22px;margin:0 0 16px}
+.profile .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--gold);margin:0 0 8px}
+.profile h3{font-size:clamp(24px,6.4vw,32px);letter-spacing:-.03em;line-height:1.1;margin:0 0 10px;color:#fff}
+.profile p{color:#C3CEC5;font-size:16.5px;line-height:1.5;margin:0 0 12px}
+.profile ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.profile li{display:flex;gap:10px;font-size:15.5px;line-height:1.45;color:#E7ECE6}
+.profile li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-top:8px}
+.fix{border-radius:24px;padding:28px 22px;margin:0 0 16px;background:linear-gradient(160deg,#2F6B4A 0%,#1F3428 100%);color:#fff;text-align:center}
+.fix .date{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.06em;background:rgba(255,255,255,.12);padding:7px 14px;border-radius:999px;margin:0 0 14px}
+.fix h3{font-size:clamp(26px,7vw,36px);line-height:1.08;letter-spacing:-.035em;margin:0 0 12px}
+.fix p{color:#D3DED6;line-height:1.5;font-size:16.5px;margin:0 0 20px}
+.fix .btn{margin:0 0 10px}
+.fix .btn.ghost{color:#fff;border-color:rgba(255,255,255,.35)}
+.care{font-size:13.5px;line-height:1.5;color:var(--muted);background:#FFF8E6;border-radius:14px;padding:14px 16px;margin:0 0 16px}
+.hide{display:none!important}
+@media print{.top,.fix .btn,.nav,.no-print{display:none!important}body{background:#fff}.res-card,.profile,.fix{box-shadow:none;break-inside:avoid}.profile,.fix{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in"><div class="brand">Brain Bamboo</div><div class="step-lbl" id="stepLbl">Tu diagnóstico</div></div>
+  <div class="bar"><i id="bar"></i></div>
+</header>
+<main>
+
+<!-- INTRO -->
+<section class="screen on" id="s-intro">
+  <span class="kicker">Tu regalo antes de la clase</span>
+  <h1>¿Cómo está tu cerebro <span>hoy?</span></h1>
+  <p class="lead">Un diagnóstico inicial de 4 minutos para saber dónde tienes puesto el freno de mano: energía, reacción, enfoque o descanso. Lo llevas a la clase del jueves 22 y ahí trabajamos sobre tu resultado.</p>
+  <ol class="steps">
+    <li><b>1</b><div><strong>Cuéntanos de ti</strong><p>8 preguntas rápidas para preparar la clase según quién eres.</p></div></li>
+    <li><b>2</b><div><strong>Tu diagnóstico</strong><p>12 situaciones del día a día. Responde pensando en las últimas dos semanas.</p></div></li>
+    <li><b>3</b><div><strong>Tu resultado</strong><p>Tu nivel de freno, tu perfil y qué vamos a resolver contigo el jueves 22.</p></div></li>
+  </ol>
+  <div id="idFields" class="hide">
+    <div class="field"><label for="fNombre">Tu nombre</label><input id="fNombre" autocomplete="given-name" placeholder="Tu nombre"></div>
+    <div class="field"><label for="fWa">Tu WhatsApp (con indicativo)</label><input id="fWa" type="tel" inputmode="tel" autocomplete="tel" placeholder="+57 300 000 0000"></div>
+  </div>
+  <button class="btn gold" id="startBtn">Empezar mi diagnóstico</button>
+  <p class="fine">Tus respuestas son confidenciales y solo las usa el equipo de Brain Bamboo para preparar la clase.</p>
+</section>
+
+<!-- PREGUNTAS (se pintan con JS) -->
+<section class="screen" id="s-q">
+  <p class="q-meta" id="qMeta"></p>
+  <h2 class="q-title" id="qTitle"></h2>
+  <p class="q-help" id="qHelp"></p>
+  <div id="qOpts"></div>
+  <div class="nav">
+    <button class="btn ghost back" id="backBtn" aria-label="Pregunta anterior">←</button>
+    <button class="btn" id="nextBtn" disabled>Siguiente</button>
+  </div>
+</section>
+
+<!-- PUENTE ENTRE ENCUESTA Y DIAGNÓSTICO -->
+<section class="screen" id="s-mid">
+  <div class="interlude">
+    <span class="kicker" style="background:rgba(255,255,255,.1);color:#D2A138">Parte 1 lista</span>
+    <h2 style="margin-top:14px">Ahora, tu cerebro.</h2>
+    <p>Vas a leer 12 situaciones. Marca qué tan seguido te pasan, pensando en las últimas dos semanas. No hay respuestas buenas ni malas: entre más honesto seas, más útil es la clase para ti.</p>
+    <button class="btn gold" id="midBtn">Empezar el diagnóstico</button>
+  </div>
+</section>
+
+<!-- CALCULANDO -->
+<section class="screen" id="s-load">
+  <div class="loading"><div class="spin"></div><h2>Leyendo tus respuestas…</h2><p class="lead">Estamos armando tu diagnóstico.</p></div>
+</section>
+
+<!-- RESULTADO -->
+<section class="screen" id="s-res">
+  <span class="kicker" id="rHello">Tu diagnóstico</span>
+  <h1 style="margin-bottom:18px">Así está tu cerebro <span>hoy.</span></h1>
+
+  <div class="res-card">
+    <svg class="gauge" viewBox="0 0 240 130" aria-hidden="true">
+      <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#5E9C6E"/><stop offset=".5" stop-color="#D2A138"/><stop offset="1" stop-color="#C8352E"/></linearGradient></defs>
+      <path d="M20 120 A100 100 0 0 1 220 120" fill="none" stroke="#EEE9DA" stroke-width="18" stroke-linecap="round"/>
+      <path id="gArc" d="M20 120 A100 100 0 0 1 220 120" fill="none" stroke="url(#gg)" stroke-width="18" stroke-linecap="round" pathLength="100" stroke-dasharray="0 100"/>
+      <g id="gNeedle" style="transform-origin:120px 120px;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)"><line x1="120" y1="120" x2="120" y2="38" stroke="#1F3428" stroke-width="4" stroke-linecap="round"/><circle cx="120" cy="120" r="8" fill="#1F3428"/></g>
+    </svg>
+    <div class="g-num" id="gNum">0%</div>
+    <p class="g-lbl">Nivel de freno de mano</p>
+    <span class="level" id="rLevel"></span>
+    <p class="lead" id="rLevelTxt" style="text-align:center;margin:0 0 20px;font-size:16px"></p>
+    <div class="dims" id="rDims"></div>
+  </div>
+
+  <div class="profile">
+    <span class="tag">TU PERFIL</span>
+    <h3 id="pName"></h3>
+    <p id="pTxt"></p>
+    <ul id="pList"></ul>
+  </div>
+
+  <div class="care hide" id="rCare">Tu resultado está alto. La clase te va a dar herramientas concretas, y si sientes que esto te está desbordando, habla también con un profesional de salud: pedir apoyo es parte de soltar el freno.</div>
+
+  <div class="fix">
+    <span class="date">CLASE EN VIVO · 7:00 P. M. COLOMBIA</span>
+    <h3>Esto lo vamos a solucionar el 22 de octubre.</h3>
+    <p id="fixTxt">Llega con este resultado a la mano: vamos a trabajar sobre tu perfil y vas a salir sabiendo qué hacer desde el día siguiente.</p>
+    <a class="btn wa" id="waBtn" href="#" target="_blank" rel="noopener">Confirmar en WhatsApp</a>
+    <a class="btn ghost" id="calBtn" href="#" target="_blank" rel="noopener">Agendar la clase en mi calendario</a>
+    <button class="btn ghost" id="saveBtn">Guardar mi diagnóstico (PDF)</button>
+  </div>
+  <p class="fine">Autoevaluación orientativa. No es un diagnóstico médico ni reemplaza la valoración de un profesional de salud.</p>
+</section>
+</main>
+
+<script>
+(function () {
+  var ENDPOINT = "https://script.google.com/macros/s/AKfycbxHY9Yy4NQpmv47FwvTtWfTYRBFMIpSk49ycSVPz674VMjYxL11MO-X8trDLrBRYU-Dew/exec";
+  var WA_NUMBER = "15553232765";
+  var CLASS_START = "20261022T190000", CLASS_END = "20261022T203000"; // hora Colombia
+
+  var qs = new URLSearchParams(location.search);
+  var ctx = {
+    id: qs.get('id') || '',
+    wa: (qs.get('wa') || qs.get('phone') || '').replace(/[^0-9]/g, ''),
+    nombre: qs.get('n') || qs.get('nombre') || '',
+    utm_source: qs.get('utm_source') || '', utm_campaign: qs.get('utm_campaign') || '', utm_content: qs.get('utm_content') || ''
+  };
+  if (!ctx.wa) document.getElementById('idFields').classList.remove('hide');
+
+  // ---------- Encuesta de cualificación (puntos para calidad de lead) ----------
+  var SURVEY = [
+    { k: 'ocupacion', t: '¿A qué te dedicas hoy?', o: [
+      ['Soy empresario o dueño de negocio', 3], ['Gerente, director o cargo ejecutivo', 3], ['Profesional independiente', 2],
+      ['Empleado o empleada', 1], ['Estoy empezando a emprender', 1], ['Estudio u otra situación', 0]] },
+    { k: 'ingreso', t: '¿Cuál es tu ingreso mensual aproximado?', h: 'En dólares. Nos ayuda a preparar ejemplos que se parezcan a tu realidad.', o: [
+      ['Menos de USD 500', 0], ['USD 500 a 1.500', 1], ['USD 1.500 a 3.000', 2], ['USD 3.000 a 6.000', 3], ['Más de USD 6.000', 3], ['Prefiero no decirlo', 1]] },
+    { k: 'edad', t: '¿En qué rango de edad estás?', o: [
+      ['18 a 24', 0], ['25 a 34', 1], ['35 a 44', 2], ['45 a 54', 2], ['55 o más', 1]] },
+    { k: 'dolor', t: '¿Qué es lo que más te pesa hoy?', o: [
+      ['Llego a la noche con el cerebro quemado', 0], ['Reacciono en automático y luego me arrepiento', 0], ['Aplazo justo lo más importante', 0],
+      ['No logro apagar la cabeza para descansar', 0], ['Me cuesta concentrarme y recordar', 0], ['Siento que funciono, pero no disfruto', 0]] },
+    { k: 'tiempo', t: '¿Hace cuánto te sientes así?', o: [
+      ['Menos de 3 meses', 1], ['Entre 3 y 12 meses', 2], ['Entre 1 y 3 años', 3], ['Más de 3 años', 3]] },
+    { k: 'intentado', t: '¿Qué has intentado para sentirte mejor?', h: 'Puedes marcar varias.', multi: true, o: [
+      ['Meditación o apps de bienestar', 1], ['Terapia o acompañamiento profesional', 1], ['Ejercicio', 1],
+      ['Suplementos', 1], ['Cursos, libros o pódcasts', 1], ['Nada todavía', 0]] },
+    { k: 'cuando', t: 'Si en la clase ves un camino claro para soltar el freno, ¿cuándo empezarías?', o: [
+      ['Esta misma semana', 3], ['Este mes', 2], ['En unos meses', 1], ['Por ahora solo quiero la información gratuita', 0]] },
+    { k: 'inversion', t: '¿Cuánto estarías dispuesto a invertir en un acompañamiento de 4 semanas para lograrlo?', o: [
+      ['Por ahora nada', 0], ['Menos de USD 50', 1], ['Entre USD 50 y 150', 2], ['Entre USD 150 y 300', 3], ['Más de USD 300', 3]] }
+  ];
+  var SURVEY_MAX = 3 + 3 + 2 + 0 + 3 + 1 + 3 + 3;
+
+  // ---------- Diagnóstico ----------
+  var DIMS = {
+    energia: { n: 'Energía' }, reaccion: { n: 'Reacción' }, enfoque: { n: 'Enfoque' }, descanso: { n: 'Apagado y descanso' }
+  };
+  var DIAG = [
+    ['energia', 'Llego a la noche con la cabeza agotada, aunque el día no haya sido tan pesado.'],
+    ['reaccion', 'Respondo de forma brusca y a los minutos pienso «no debí decir eso».'],
+    ['enfoque', 'Aplazo justo la tarea que más importa y termino haciéndola tarde y a la carrera.'],
+    ['descanso', 'Cuando por fin me acuesto, la cabeza sigue repasando pendientes.'],
+    ['energia', 'Me levanto cansado, como si no hubiera descansado.'],
+    ['reaccion', 'Noto la mandíbula apretada, el pecho tenso o los hombros arriba sin darme cuenta.'],
+    ['enfoque', 'Leo algo y tengo que volver a leerlo porque no se me quedó.'],
+    ['descanso', 'Me cuesta desconectarme del celular o del trabajo, incluso en mi tiempo libre.'],
+    ['energia', 'Necesito café o azúcar para arrancar o para aguantar la tarde.'],
+    ['reaccion', 'Cosas pequeñas me sacan de quicio más rápido que antes.'],
+    ['enfoque', 'Salto de una tarea a otra (o de una pestaña a otra) sin terminar ninguna.'],
+    ['descanso', 'Siento que estoy funcionando, pero no disfrutando.']
+  ];
+  var SCALE = [['Nunca', 0], ['A veces', 1], ['Seguido', 2], ['Casi siempre', 3]];
+
+  var PROFILES = {
+    energia: { name: 'Batería en rojo', txt: 'Tu cerebro gasta la energía del día defendiéndose, y en la noche ya no le queda nada para ti ni para los tuyos. No es falta de disciplina: es un sistema que lleva tiempo sin bajar las revoluciones.',
+      list: ['Por qué llegas sin batería aunque el día no haya sido tan pesado.', 'Cómo bajarle las revoluciones en minutos, entre una tarea y otra.', 'Qué cambiar desde el día siguiente para empezar a recuperar tu energía.'] },
+    reaccion: { name: 'Modo alarma', txt: 'Tu cerebro está leyendo amenazas donde no las hay, y el estrés acumulado decide por ti antes de que alcances a pensar. Por eso reaccionas y después te arrepientes.',
+      list: ['Qué pasa en tu cerebro el segundo antes de reaccionar mal.', 'Cómo ganarle ese segundo en plena reunión o conversación difícil, sin que nadie lo note.', 'Qué hacer la próxima vez que lo sientas venir.'] },
+    enfoque: { name: 'Cabeza dispersa', txt: 'Tu cerebro está tan ocupado apagando incendios que no le queda espacio para lo importante. No es pereza: es el freno de mano puesto sobre tu atención.',
+      list: ['Por qué aplazas justo lo que más mueve tu trabajo o tu negocio.', 'Cómo despejar la cabeza en minutos antes de sentarte a lo importante.', 'Cómo sostener el foco sin pelear con tu cerebro.'] },
+    descanso: { name: 'Motor que no se apaga', txt: 'Tu cerebro no encuentra el interruptor de apagado: sigue en modo trabajo cuando por fin te sientas o te acuestas, y el descanso deja de recargarte.',
+      list: ['Por qué tu cabeza no se apaga ni cuando por fin te detienes.', 'Cómo bajarle las revoluciones en minutos para descansar de verdad.', 'Qué hacer desde el día siguiente para llegar a la noche con más paz.'] }
+  };
+  var LEVELS = [
+    [25, 'Freno suave', 'Tu cerebro todavía tiene margen, pero ya hay señales. Es el mejor momento para corregir.'],
+    [50, 'Freno a medias', 'Estás funcionando, pero pagando un costo diario que ya se nota en tu energía y en tus reacciones.'],
+    [75, 'Freno puesto', 'Tu cerebro lleva tiempo trabajando con el freno de mano puesto. Lo estás compensando con fuerza de voluntad.'],
+    [101, 'Freno a fondo', 'Tu cerebro está en modo supervivencia buena parte del día. Es justo el punto donde la clase más te sirve.']
+  ];
+
+  // ---------- Estado ----------
+  var items = SURVEY.map(function (q) { return { type: 'survey', q: q }; })
+    .concat([{ type: 'mid' }])
+    .concat(DIAG.map(function (d, i) { return { type: 'diag', q: { k: 'd' + (i + 1), dim: d[0], t: d[1] } }; }));
+  var answers = {}, pos = -1;
+  var TOTAL_Q = SURVEY.length + DIAG.length;
+
+  var $ = function (id) { return document.getElementById(id); };
+  function show(id) { document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('on'); }); $(id).classList.add('on'); window.scrollTo(0, 0); }
+  function progress() {
+    var done = 0; items.forEach(function (it, i) { if (it.type !== 'mid' && i < pos) done++; });
+    $('bar').style.width = Math.round(done / TOTAL_Q * 100) + '%';
+  }
+
+  function render() {
+    var it = items[pos];
+    progress();
+    if (it.type === 'mid') { $('stepLbl').textContent = 'Parte 2 de 2'; show('s-mid'); return; }
+    var q = it.q, isDiag = it.type === 'diag';
+    var idx = isDiag ? DIAG.findIndex(function (d, i) { return 'd' + (i + 1) === q.k; }) + 1 : SURVEY.indexOf(q) + 1;
+    $('stepLbl').textContent = isDiag ? 'Parte 2 de 2 · Tu cerebro' : 'Parte 1 de 2 · Sobre ti';
+    $('qMeta').textContent = isDiag ? ('Situación ' + idx + ' de ' + DIAG.length) : ('Pregunta ' + idx + ' de ' + SURVEY.length);
+    $('qTitle').textContent = q.t;
+    $('qHelp').textContent = isDiag ? '¿Qué tan seguido te pasa?' : (q.h || '');
+    $('qHelp').style.display = $('qHelp').textContent ? '' : 'none';
+    var box = $('qOpts'); box.innerHTML = '';
+    var wrap = document.createElement('div'); wrap.className = isDiag ? 'scale' : 'opts';
+    var opts = isDiag ? SCALE : q.o;
+    opts.forEach(function (o, oi) {
+      var b = document.createElement('button'); b.type = 'button';
+      b.className = 'opt' + (q.multi ? ' multi' : '');
+      if (isDiag) b.innerHTML = '<span class="n">' + o[1] + '</span>' + o[0];
+      else b.innerHTML = '<span class="dot"></span><span>' + o[0] + '</span>';
+      var cur = answers[q.k];
+      if (q.multi ? (cur || []).indexOf(oi) > -1 : cur === oi) b.classList.add('sel');
+      b.onclick = function () {
+        if (q.multi) {
+          var arr = (answers[q.k] || []).slice();
+          var none = opts.length - 1;
+          if (oi === none) arr = arr.indexOf(none) > -1 ? [] : [none];
+          else { arr = arr.filter(function (x) { return x !== none; }); var p = arr.indexOf(oi); if (p > -1) arr.splice(p, 1); else arr.push(oi); }
+          answers[q.k] = arr;
+          wrap.querySelectorAll('.opt').forEach(function (el, ei) { el.classList.toggle('sel', arr.indexOf(ei) > -1); });
+          $('nextBtn').disabled = arr.length === 0;
+        } else {
+          answers[q.k] = oi;
+          wrap.querySelectorAll('.opt').forEach(function (el, ei) { el.classList.toggle('sel', ei === oi); });
+          var at = pos;
+          setTimeout(function () { if (pos === at) next(); }, 260);
+        }
+      };
+      wrap.appendChild(b);
+    });
+    box.appendChild(wrap);
+    var ok = q.multi ? (answers[q.k] || []).length > 0 : answers[q.k] !== undefined;
+    $('nextBtn').disabled = !ok;
+    $('nextBtn').style.display = q.multi ? '' : (ok ? '' : 'none');
+    show('s-q');
+  }
+  function next() {
+    var it = items[pos];
+    if (it && it.type !== 'mid') {
+      var a = answers[it.q.k];
+      if (it.q.multi ? !(a && a.length) : a === undefined) return;
+    }
+    if (pos < items.length - 1) { pos++; render(); } else finish();
+  }
+  function back() {
+    if (pos <= 0) { pos = -1; show('s-intro'); $('bar').style.width = '0'; return; }
+    pos--; if (items[pos].type === 'mid') pos--; render();
+  }
+
+  $('startBtn').onclick = function () {
+    if (!ctx.wa) {
+      var w = $('fWa').value.replace(/[^0-9]/g, '');
+      if (w.length < 8) { $('fWa').focus(); $('fWa').style.borderColor = '#C8352E'; return; }
+      ctx.wa = w; ctx.nombre = $('fNombre').value.trim();
+    }
+    if (window.fbq) try { fbq('trackCustom', 'DiagnosticoInicio'); } catch (e) {}
+    pos = 0; render();
+  };
+  $('midBtn').onclick = function () { pos++; render(); };
+  $('nextBtn').onclick = next;
+  $('backBtn').onclick = back;
+
+  // ---------- Resultado ----------
+  function finish() {
+    $('bar').style.width = '100%'; $('stepLbl').textContent = 'Tu resultado';
+    show('s-load');
+    var sc = 0;
+    SURVEY.forEach(function (q) {
+      var a = answers[q.k];
+      if (q.multi) sc += Math.min(1, (a || []).reduce(function (s, i) { return s + q.o[i][1]; }, 0));
+      else sc += q.o[a][1];
+    });
+    var calidad = Math.round(sc / SURVEY_MAX * 100);
+    var cat = calidad >= 70 ? 'A' : calidad >= 45 ? 'B' : 'C';
+    var dim = { energia: 0, reaccion: 0, enfoque: 0, descanso: 0 }, total = 0;
+    DIAG.forEach(function (d, i) { var v = SCALE[answers['d' + (i + 1)]][1]; dim[d[0]] += v; total += v; });
+    var nivel = Math.round(total / (DIAG.length * 3) * 100);
+    var order = ['energia', 'reaccion', 'enfoque', 'descanso'];
+    var top = order.reduce(function (b, k) { return dim[k] > dim[b] ? k : b; }, order[0]);
+    var prof = PROFILES[top];
+    var lvl = LEVELS.filter(function (l) { return nivel < l[0]; })[0];
+
+    var label = function (q, a) { return q.multi ? (a || []).map(function (i) { return q.o[i][0]; }).join(' | ') : q.o[a][0]; };
+    var data = new URLSearchParams();
+    data.append('tipo', 'diagnostico');
+    data.append('id', ctx.id); data.append('whatsapp', ctx.wa); data.append('nombre', ctx.nombre);
+    SURVEY.forEach(function (q) { data.append(q.k, label(q, answers[q.k])); });
+    data.append('calidad', calidad); data.append('categoria', cat);
+    order.forEach(function (k) { data.append(k, Math.round(dim[k] / 9 * 100)); });
+    data.append('nivel', nivel); data.append('perfil', prof.name);
+    data.append('respuestas', DIAG.map(function (d, i) { return SCALE[answers['d' + (i + 1)]][1]; }).join(''));
+    ['utm_source', 'utm_campaign', 'utm_content'].forEach(function (k) { data.append(k, ctx[k]); });
+    data.append('pagina', location.href);
+    if (ENDPOINT) { try { fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body: data, keepalive: true }); } catch (e) {} }
+    if (window.fbq) try {
+      fbq('trackCustom', 'DiagnosticoCompleto', { categoria: cat, perfil: prof.name });
+      if (cat !== 'C') fbq('trackCustom', 'LeadCalificado', { categoria: cat, value: cat === 'A' ? 2 : 1, currency: 'USD' });
+    } catch (e) {}
+
+    setTimeout(function () {
+      $('rHello').textContent = ctx.nombre ? ('Tu diagnóstico, ' + ctx.nombre.split(' ')[0]) : 'Tu diagnóstico';
+      $('rLevel').textContent = lvl[1]; $('rLevelTxt').textContent = lvl[2];
+      $('pName').textContent = prof.name; $('pTxt').textContent = prof.txt;
+      $('pList').innerHTML = prof.list.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+      $('fixTxt').textContent = 'El jueves 22 vas a ver, para tu perfil «' + prof.name + '»: ' + prof.list[0].charAt(0).toLowerCase() + prof.list[0].slice(1, -1) + ', y qué hacer desde el día siguiente. Llega con este resultado a la mano.';
+      var colors = { energia: '#D2A138', reaccion: '#C8352E', enfoque: '#5E8FB0', descanso: '#2F6B4A' };
+      $('rDims').innerHTML = order.map(function (k) {
+        var p = Math.round(dim[k] / 9 * 100);
+        return '<div><div class="dim-h">' + DIMS[k].n + '<span>' + p + '%</span></div><div class="track"><i data-w="' + p + '" style="background:' + colors[k] + '"></i></div></div>';
+      }).join('');
+      if (nivel >= 80) $('rCare').classList.remove('hide');
+      var msg = 'Ya hice mi diagnóstico. Mi perfil es: ' + prof.name + ' (' + nivel + '%).';
+      $('waBtn').href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+      $('calBtn').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Suelta el freno de mano · Clase en vivo') +
+        '&dates=' + CLASS_START + '/' + CLASS_END + '&ctz=America/Bogota&details=' + encodeURIComponent('Clase gratuita en vivo con Brain Bamboo. El enlace de Zoom te llega por WhatsApp. Lleva tu diagnóstico: ' + prof.name + ' (' + nivel + '%).');
+      show('s-res');
+      requestAnimationFrame(function () {
+        $('gArc').setAttribute('stroke-dasharray', nivel + ' 100');
+        $('gNeedle').style.transform = 'rotate(' + (-90 + nivel * 1.8) + 'deg)';
+        document.querySelectorAll('#rDims i').forEach(function (i) { i.style.width = i.getAttribute('data-w') + '%'; });
+        var n = 0, el = $('gNum'), t = setInterval(function () { n += Math.max(1, Math.round(nivel / 30)); if (n >= nivel) { n = nivel; clearInterval(t); } el.textContent = n + '%'; }, 30);
+      });
+    }, 1600);
+  }
+  $('gNeedle').style.transform = 'rotate(-90deg)';
+  $('saveBtn').onclick = function () { window.print(); };
+})();
+</script>
+</body>
+</html>
