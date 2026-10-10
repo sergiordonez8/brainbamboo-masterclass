@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Tu diagnóstico cerebral · Brain Bamboo</title>
+<title>Tu diagnóstico cerebral · BrainBamboo</title>
 <meta name="description" content="Diagnóstico inicial de cómo está tu cerebro hoy. Antes de la clase Suelta el freno de mano.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Poppins:wght@300&amp;display=swap">
 <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');(function(){var q=new URLSearchParams(location.search),ph=(q.get('wa')||q.get('phone')||'').replace(/[^0-9]/g,''),fn=(q.get('n')||q.get('nombre')||'').trim().split(' ')[0].toLowerCase(),am={};if(ph)am.ph=ph;if(fn)am.fn=fn;fbq('init','1663305672064330',am);fbq('track','PageView');})();</script>
 
 <style>
@@ -101,7 +101,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
 </head>
 <body>
 <header class="top">
-  <div class="top-in"><div class="brand">Brain Bamboo</div><div class="step-lbl" id="stepLbl">Tu diagnóstico</div></div>
+  <div class="top-in"><div class="brand"><span style="display: inline-flex; align-items: center; gap: 9px;"><img src="https://static.wixstatic.com/media/0dea0c_ec1ec4d4cf7f41738e03e73001bb7f7d~mv2.png/v1/fill/w_96,h_96,al_c,q_90/brainbamboo-logo.png" alt="" width="30" height="30" style="display: block; width: 30px; height: 30px;"><span style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 19px; letter-spacing: 0; line-height: 1; color: #1F3428;">Brain<span style="color: #10A0BB;">Bamboo</span></span></span></div><div class="step-lbl" id="stepLbl">Tu diagnóstico</div></div>
   <div class="bar"><i id="bar"></i></div>
 </header>
 <main>
@@ -121,7 +121,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
     <div class="field"><label for="fWa">Tu WhatsApp (con indicativo)</label><input id="fWa" type="tel" inputmode="tel" autocomplete="tel" placeholder="+57 300 000 0000"></div>
   </div>
   <button class="btn gold" id="startBtn">Empezar mi diagnóstico</button>
-  <p class="fine">Tus respuestas son confidenciales y solo las usa el equipo de Brain Bamboo para preparar la clase.</p>
+  <p class="fine">Tus respuestas son confidenciales y solo las usa el equipo de BrainBamboo para preparar la clase.</p>
 </section>
 
 <!-- PREGUNTAS (se pintan con JS) -->
@@ -404,7 +404,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
       var msg = 'Ya hice mi diagnóstico. Mi perfil es: ' + prof.name + ' (' + nivel + '%).';
       $('waBtn').href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
       $('calBtn').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Suelta el freno de mano · Clase en vivo') +
-        '&dates=' + CLASS_START + '/' + CLASS_END + '&ctz=America/Bogota&details=' + encodeURIComponent('Clase gratuita en vivo con Brain Bamboo. El enlace de Zoom te llega por WhatsApp. Lleva tu diagnóstico: ' + prof.name + ' (' + nivel + '%).');
+        '&dates=' + CLASS_START + '/' + CLASS_END + '&ctz=America/Bogota&details=' + encodeURIComponent('Clase gratuita en vivo con BrainBamboo. El enlace de Zoom te llega por WhatsApp. Lleva tu diagnóstico: ' + prof.name + ' (' + nivel + '%).');
       show('s-res');
       requestAnimationFrame(function () {
         $('gArc').setAttribute('stroke-dasharray', nivel + ' 100');
