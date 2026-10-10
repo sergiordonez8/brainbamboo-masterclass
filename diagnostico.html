@@ -410,7 +410,11 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
         $('gArc').setAttribute('stroke-dasharray', nivel + ' 100');
         $('gNeedle').style.transform = 'rotate(' + (-90 + nivel * 1.8) + 'deg)';
         document.querySelectorAll('#rDims i').forEach(function (i) { i.style.width = i.getAttribute('data-w') + '%'; });
-        var n = 0, el = $('gNum'), t = setInterval(function () { n += Math.max(1, Math.round(nivel / 30)); if (n >= nivel) { n = nivel; clearInterval(t); } el.textContent = n + '%'; }, 30);
+        var el = $('gNum'), t0 = Date.now(), t = setInterval(function () {
+          var k = Math.min(1, (Date.now() - t0) / 1200);
+          el.textContent = Math.round(nivel * k) + '%';
+          if (k >= 1) clearInterval(t);
+        }, 30);
       });
     }, 1600);
   }
