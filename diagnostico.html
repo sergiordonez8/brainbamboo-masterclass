@@ -49,6 +49,8 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
 .q-title{font-size:clamp(22px,5.8vw,30px);line-height:1.18;letter-spacing:-.025em;font-weight:700;margin:0 0 8px}
 .q-help{font-size:15px;color:var(--muted);margin:0 0 18px;line-height:1.45}
 .opts{display:grid;gap:10px}
+.otro{display:block;width:100%;box-sizing:border-box;margin-top:10px;border:1.5px solid var(--green);border-radius:14px;padding:14px 16px;font:inherit;font-size:16px;line-height:1.4;color:var(--ink);background:#fff;resize:vertical}
+.otro:focus{outline:2px solid #D2A138;outline-offset:1px}
 .opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1.5px solid transparent;border-radius:16px;padding:16px 18px;font-size:16.5px;line-height:1.35;color:var(--ink);box-shadow:0 1px 0 rgba(31,52,40,.05);transition:border-color .15s,background .15s}
 .opt:hover{border-color:rgba(47,107,74,.35)}
 .opt .dot{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid #C9C2AE;display:inline-flex;align-items:center;justify-content:center}
@@ -211,24 +213,27 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
   var SURVEY = [
     { k: 'ocupacion', t: '¿A qué te dedicas hoy?', o: [
       ['Soy empresario o dueño de negocio', 3], ['Gerente, director o cargo ejecutivo', 3], ['Profesional independiente', 2],
-      ['Empleado o empleada', 1], ['Estoy empezando a emprender', 1], ['Estudio u otra situación', 0]] },
+      ['Empleado o empleada', 1], ['Estoy empezando a emprender', 1], ['Estudio', 0], ['Otra (escríbela)', 1, true]] },
     { k: 'ingreso', t: '¿Cuál es tu ingreso mensual aproximado?', h: 'En dólares. Nos ayuda a preparar ejemplos que se parezcan a tu realidad.', o: [
       ['Menos de USD 500', 0], ['USD 500 a 1.500', 1], ['USD 1.500 a 3.000', 2], ['USD 3.000 a 6.000', 3], ['Más de USD 6.000', 3], ['Prefiero no decirlo', 1]] },
     { k: 'edad', t: '¿En qué rango de edad estás?', o: [
       ['18 a 24', 0], ['25 a 34', 1], ['35 a 44', 2], ['45 a 54', 2], ['55 o más', 1]] },
     { k: 'dolor', t: '¿Qué es lo que más te pesa hoy?', o: [
       ['Llego a la noche con el cerebro quemado', 0], ['Reacciono en automático y luego me arrepiento', 0], ['Aplazo justo lo más importante', 0],
-      ['No logro apagar la cabeza para descansar', 0], ['Me cuesta concentrarme y recordar', 0], ['Siento que funciono, pero no disfruto', 0]] },
+      ['No logro apagar la cabeza para descansar', 0], ['Me cuesta concentrarme y recordar', 0], ['Siento que funciono, pero no disfruto', 0], ['Otra cosa (escríbela)', 0, true]] },
     { k: 'tiempo', t: '¿Hace cuánto te sientes así?', o: [
       ['Menos de 3 meses', 1], ['Entre 3 y 12 meses', 2], ['Entre 1 y 3 años', 3], ['Más de 3 años', 3]] },
     { k: 'intentado', t: '¿Qué has intentado para sentirte mejor?', h: 'Puedes marcar varias.', multi: true, o: [
       ['Meditación o apps de bienestar', 1], ['Terapia o acompañamiento profesional', 1], ['Ejercicio', 1],
-      ['Suplementos', 1], ['Cursos, libros o pódcasts', 1], ['Nada todavía', 0]] },
+      ['Suplementos', 1], ['Cursos, libros o pódcasts', 1], ['Otra cosa (escríbela)', 1, true], ['Nada todavía', 0]] },
     { k: 'cuando', t: 'Si en la clase ves un camino claro para soltar el freno, ¿cuándo empezarías?', o: [
-      ['Esta misma semana', 3], ['Este mes', 2], ['En unos meses', 1], ['Por ahora solo quiero la información gratuita', 0]] },
+      ['Esta misma semana', 3], ['Este mes', 2], ['En unos meses', 1], ['Por ahora solo quiero la información gratuita', 0], ['Otra respuesta (escríbela)', 1, true]] },
     { k: 'inversion', t: '¿Cuánto estarías dispuesto a invertir en un acompañamiento de 4 semanas para lograrlo?', o: [
       ['Por ahora nada', 0], ['Menos de USD 50', 1], ['Entre USD 50 y 150', 2], ['Entre USD 150 y 300', 3], ['Más de USD 300', 3]] }
   ];
+  var otros = {};
+  function otroIdx(q) { for (var i = 0; i < (q.o || []).length; i++) if (q.o[i][2]) return i; return -1; }
+  function otroSel(q) { var oi = otroIdx(q), a = answers[q.k]; return oi > -1 && (q.multi ? (a || []).indexOf(oi) > -1 : a === oi); }
   var SURVEY_MAX = 3 + 3 + 2 + 0 + 3 + 1 + 3 + 3;
 
   // ---------- Diagnóstico ----------
@@ -312,9 +317,12 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
           answers[q.k] = arr;
           wrap.querySelectorAll('.opt').forEach(function (el, ei) { el.classList.toggle('sel', arr.indexOf(ei) > -1); });
           $('nextBtn').disabled = arr.length === 0;
+          toggleOtro_(q);
         } else {
           answers[q.k] = oi;
           wrap.querySelectorAll('.opt').forEach(function (el, ei) { el.classList.toggle('sel', ei === oi); });
+          toggleOtro_(q);
+          if (opts[oi] && opts[oi][2]) { $('nextBtn').disabled = false; $('nextBtn').style.display = ''; return; }
           var at = pos;
           setTimeout(function () { if (pos === at) next(); }, 260);
         }
@@ -322,16 +330,27 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
       wrap.appendChild(b);
     });
     box.appendChild(wrap);
+    if (!isDiag && otroIdx(q) > -1) {
+      var ta = document.createElement('textarea');
+      ta.id = 'otroTxt'; ta.className = 'otro' + (otroSel(q) ? '' : ' hide'); ta.rows = 2; ta.maxLength = 200;
+      ta.placeholder = 'Escríbelo con tus palabras'; ta.value = otros[q.k] || '';
+      ta.oninput = function () { otros[q.k] = ta.value; ta.style.borderColor = ''; };
+      box.appendChild(ta);
+    }
     var ok = q.multi ? (answers[q.k] || []).length > 0 : answers[q.k] !== undefined;
     $('nextBtn').disabled = !ok;
-    $('nextBtn').style.display = q.multi ? '' : (ok ? '' : 'none');
+    $('nextBtn').style.display = (q.multi || otroSel(q)) ? '' : (ok ? '' : 'none');
     show('s-q');
   }
+  function toggleOtro_(q) { var t = $('otroTxt'); if (!t) return; var on = otroSel(q); t.classList.toggle('hide', !on); if (on) setTimeout(function () { t.focus(); }, 50); }
   function next() {
     var it = items[pos];
     if (it && it.type !== 'mid') {
       var a = answers[it.q.k];
       if (it.q.multi ? !(a && a.length) : a === undefined) return;
+      if (it.type !== 'diag' && otroSel(it.q) && String(otros[it.q.k] || '').trim().length < 2) {
+        var t = $('otroTxt'); if (t) { t.style.borderColor = '#C8352E'; t.focus(); } return;
+      }
     }
     if (pos < items.length - 1) { pos++; render(); } else finish();
   }
@@ -373,7 +392,8 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
     var prof = PROFILES[top];
     var lvl = LEVELS.filter(function (l) { return nivel < l[0]; })[0];
 
-    var label = function (q, a) { return q.multi ? (a || []).map(function (i) { return q.o[i][0]; }).join(' | ') : q.o[a][0]; };
+    var nom = function (q, i) { return q.o[i][2] ? 'Otro: ' + String(otros[q.k] || '').trim() : q.o[i][0]; };
+    var label = function (q, a) { return q.multi ? (a || []).map(function (i) { return nom(q, i); }).join(' | ') : nom(q, a); };
     var data = new URLSearchParams();
     data.append('tipo', 'diagnostico');
     data.append('id', ctx.id); data.append('whatsapp', ctx.wa); data.append('correo', ctx.correo); data.append('nombre', ctx.nombre);
@@ -384,7 +404,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
     data.append('respuestas', DIAG.map(function (d, i) { return SCALE[answers['d' + (i + 1)]][1]; }).join(''));
     ['utm_source', 'utm_campaign', 'utm_content'].forEach(function (k) { data.append(k, ctx[k]); });
     data.append('pagina', location.href);
-    if (ENDPOINT) { try { fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body: data, keepalive: true }); } catch (e) {} }
+    if (ENDPOINT) { try { fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body: data, keepalive: true }).catch(function () {}); } catch (e) {} }
     if (window.fbq) try {
       fbq('trackCustom', 'EncuestaCompleta', { categoria: cat });
       if (cat !== 'C') fbq('trackCustom', 'LeadCalificado', { categoria: cat, value: cat === 'A' ? 2 : 1, currency: 'USD' });
