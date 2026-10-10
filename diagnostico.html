@@ -345,7 +345,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
       if (w.length < 8) { $('fWa').focus(); $('fWa').style.borderColor = '#C8352E'; return; }
       ctx.wa = w; ctx.nombre = $('fNombre').value.trim();
     }
-    if (window.fbq) try { fbq('trackCustom', 'DiagnosticoInicio'); } catch (e) {}
+    if (window.fbq) try { fbq('trackCustom', 'EncuestaInicio'); } catch (e) {}
     pos = 0; render();
   };
   $('midBtn').onclick = function () { pos++; render(); };
@@ -385,7 +385,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
     data.append('pagina', location.href);
     if (ENDPOINT) { try { fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body: data, keepalive: true }); } catch (e) {} }
     if (window.fbq) try {
-      fbq('trackCustom', 'DiagnosticoCompleto', { categoria: cat, perfil: prof.name });
+      fbq('trackCustom', 'EncuestaCompleta', { categoria: cat });
       if (cat !== 'C') fbq('trackCustom', 'LeadCalificado', { categoria: cat, value: cat === 'A' ? 2 : 1, currency: 'USD' });
     } catch (e) {}
 
