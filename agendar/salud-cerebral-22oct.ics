@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Brain Bamboo//Masterclass//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:saludcerebral-22oct2026@brainbamboo.com
+DTSTAMP:20261011T000000Z
+DTSTART:20261023T000000Z
+DTEND:20261023T013000Z
+SUMMARY:Salud Cerebral 🧠 22 de Octubre con @dra.alejandra.cerebro
+DESCRIPTION:🧠 Masterclass Salud Cerebral con @dra.alejandra.cerebro\n📅 22 de octubre de 2026 · 7:00 p. m. (hora Colombia)\n\n✅ Antes de la clase\, haz el test:\nhttps://masterclass.brainbamboo.com/test\n\n💬 Únete al grupo de WhatsApp:\nhttps://sndflw.com/i/saludcerebral-22oct\n\n📲 Link de conexión (Zoom):\nhttps://us05web.zoom.us/j/85342155232?pwd=LLmlYPhrtUHRmXWgbfOrMgtbA7eI8I.1\n\n🆔 ID: 853 4215 5232\n🔑 Código de acceso: 1111
+LOCATION:https://us05web.zoom.us/j/85342155232?pwd=LLmlYPhrtUHRmXWgbfOrMgtbA7eI8I.1
+URL:https://us05web.zoom.us/j/85342155232?pwd=LLmlYPhrtUHRmXWgbfOrMgtbA7eI8I.1
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Salud Cerebral 🧠 22 de Octubre con @dra.alejandra.cerebro
+TRIGGER:-PT1H
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Salud Cerebral 🧠 22 de Octubre con @dra.alejandra.cerebro
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+END:VCALENDAR
