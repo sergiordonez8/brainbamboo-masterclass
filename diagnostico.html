@@ -112,11 +112,11 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
 <section class="screen on" id="s-intro">
   <span class="kicker">Tu regalo antes de la clase</span>
   <h1>¿Cómo está tu cerebro <span>hoy?</span></h1>
-  <p class="lead">Un diagnóstico inicial de 4 minutos para saber dónde tienes puesto el freno de mano: energía, reacción, enfoque o descanso. Lo llevas a la clase del jueves 22 y ahí trabajamos sobre tu resultado.</p>
+  <p class="lead">Un diagnóstico inicial de 4 minutos para saber dónde tienes puesto el freno de mano: energía, reacción, enfoque o descanso. Lo llevas a la clase del jueves 22 de octubre de 2026 y ahí trabajamos sobre tu resultado.</p>
   <ol class="steps">
     <li><b>1</b><div><strong>Cuéntanos de ti</strong><p>8 preguntas rápidas para preparar la clase según quién eres.</p></div></li>
     <li><b>2</b><div><strong>Tu diagnóstico</strong><p>12 situaciones del día a día. Responde pensando en las últimas dos semanas.</p></div></li>
-    <li><b>3</b><div><strong>Tu resultado</strong><p>Tu nivel de freno, tu perfil y qué vamos a resolver contigo el jueves 22.</p></div></li>
+    <li><b>3</b><div><strong>Tu resultado</strong><p>Tu nivel de freno, tu perfil y qué vamos a resolver contigo el jueves 22 de octubre de 2026.</p></div></li>
   </ol>
   <div id="idFields" class="hide">
     <div class="field"><label for="fNombre">Tu nombre</label><input id="fNombre" autocomplete="given-name" placeholder="Tu nombre"></div>
@@ -417,7 +417,7 @@ h2{font-size:clamp(24px,6.2vw,34px);line-height:1.12;letter-spacing:-.03em;margi
       $('rLevel').textContent = lvl[1]; $('rLevelTxt').textContent = lvl[2];
       $('pName').textContent = prof.name; $('pTxt').textContent = prof.txt;
       $('pList').innerHTML = prof.list.map(function (t) { return '<li>' + t + '</li>'; }).join('');
-      $('fixTxt').textContent = 'El jueves 22 vas a ver, para tu perfil «' + prof.name + '»: ' + prof.list[0].charAt(0).toLowerCase() + prof.list[0].slice(1, -1) + ', y qué hacer desde el día siguiente. Llega con este resultado a la mano.';
+      $('fixTxt').textContent = 'El jueves 22 de octubre vas a ver, para tu perfil «' + prof.name + '»: ' + prof.list[0].charAt(0).toLowerCase() + prof.list[0].slice(1, -1) + ', y qué hacer desde el día siguiente. Llega con este resultado a la mano.';
       var colors = { energia: '#D2A138', reaccion: '#C8352E', enfoque: '#5E8FB0', descanso: '#2F6B4A' };
       $('rDims').innerHTML = order.map(function (k) {
         var p = Math.round(dim[k] / 9 * 100);
