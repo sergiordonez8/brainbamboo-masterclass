@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1663305672064330');fbq('track','PageView');</script>
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1663305672064330&ev=PageView&noscript=1"></noscript>
-<style>html,body{margin:0}img{max-width:100%}</style>
+<style>html{scroll-behavior:smooth}html,body{margin:0}img{max-width:100%}</style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Poppins:wght@300&amp;family=Caveat:wght@500;600&amp;display=swap">
 <style>
 :root{--bb-ground:#F6F2E7;--bb-ink:#1F3428;--bb-gold:#D2A138;color-scheme:light}
@@ -26,6 +26,14 @@ h1,h2,h3{text-wrap:balance}
 @media (max-width: 640px){.bb-hide-sm{display:none!important}}
 a{color:#2F6B4A}a:hover{color:#1F3428}
 input::placeholder{color:#8C978E}
+.bb-cue{display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:6px;text-decoration:none;color:#1F3428}
+.bb-cue:hover{color:#1F3428}
+.bb-cue-label{font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#2F6B4A}
+.bb-cue-hand{font-size:40px;line-height:1;display:inline-block;transform-origin:50% 85%;animation:bb-buzz 2.6s ease-in-out infinite}
+.bb-cue-arrow{display:block;color:#B8862A;animation:bb-drop 1.3s ease-in-out infinite}
+@keyframes bb-buzz{0%,55%,100%{transform:translate(0,0) rotate(0)}59%{transform:translate(-4px,0) rotate(-10deg)}63%{transform:translate(4px,0) rotate(10deg)}67%{transform:translate(-4px,0) rotate(-8deg)}71%{transform:translate(4px,0) rotate(8deg)}75%{transform:translate(-2px,0) rotate(-4deg)}79%{transform:translate(0,4px) rotate(0)}85%{transform:translate(0,0)}}
+@keyframes bb-drop{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(7px);opacity:1}}
+@media (prefers-reduced-motion: reduce){.bb-cue-hand,.bb-cue-arrow{animation:none}}
 </style>
 </head>
 <body>
@@ -46,6 +54,11 @@ input::placeholder{color:#8C978E}
       <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: #2F6B4A;">Clase en vivo y gratuita · Jueves 22 de octubre · 7:00 p. m. (Colombia)</span>
       <h1 style="margin: 0; font-size: clamp(38px, 10vw, 72px); font-weight: 700; line-height: 1.04; letter-spacing: -0.03em; color: #1F3428;">Tu cerebro tiene el freno de mano puesto,<br><span style="color: #6F8B78;">y llevas años sin darte cuenta.</span></h1>
       <p style="margin: 8px 0 0; font-size: clamp(18px, 4.8vw, 24px); line-height: 1.35; letter-spacing: -0.015em; color: #3F5145; max-width: 760px; font-weight: 400;">Aprende cómo dejar de reaccionar en automático, procrastinar tus tareas y dejar de llegar a la noche como si un camión te hubiese pasado por encima.</p>
+      <a href="#registro" class="bb-cue" aria-label="Regístrate aquí, el formulario está más abajo">
+        <span class="bb-cue-label">Regístrate aquí</span>
+        <span class="bb-cue-hand" aria-hidden="true">👇</span>
+        <svg class="bb-cue-arrow" width="26" height="30" viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2v24"/><path d="M4 18l9 9 9-9"/></svg>
+      </a>
     </div>
   </section>
 
