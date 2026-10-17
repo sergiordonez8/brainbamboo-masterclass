@@ -23,7 +23,7 @@ input::placeholder{color:#86868B}
 
 h1,h2,h3{text-wrap:balance}
 @media (max-width: 900px){.bb-line{display:none!important}}
-@media (max-width: 640px){.bb-hide-sm{display:none!important}}
+@media (max-width: 640px){.bb-hide-sm{display:none!important}.bb-hero{padding:18px 18px 12px!important}.bb-hero-in{gap:10px!important}.bb-form-wrap{padding:4px 14px 40px!important}#registro{padding:20px!important;gap:14px!important}#registro h2{font-size:22px!important}.bb-hero h1{font-size:25px!important;line-height:1.14!important}#registro .bb-grid{gap:10px!important}}
 a{color:#2F6B4A}a:hover{color:#1F3428}
 input::placeholder{color:#8C978E}
 .bb-cue{display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:6px;text-decoration:none;color:#1F3428}
@@ -49,12 +49,12 @@ input::placeholder{color:#8C978E}
     </div>
   </nav>
 
-  <section style="padding: clamp(36px, 6vw, 64px) 24px 32px; display: flex; justify-content: center; background: #F6F2E7;">
-    <div style="width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px;">
-      <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: #2F6B4A;">Clase en vivo y gratuita · Jueves 22 de octubre · 7:00 p. m. (Colombia)</span>
-      <h1 style="margin: 0; font-size: clamp(38px, 10vw, 72px); font-weight: 700; line-height: 1.04; letter-spacing: -0.03em; color: #1F3428;">Tu cerebro tiene el freno de mano puesto,<br><span style="color: #6F8B78;">y llevas años sin darte cuenta.</span></h1>
-      <p style="margin: 8px 0 0; font-size: clamp(18px, 4.8vw, 24px); line-height: 1.35; letter-spacing: -0.015em; color: #3F5145; max-width: 760px; font-weight: 400;">Aprende cómo dejar de reaccionar en automático, procrastinar tus tareas y dejar de llegar a la noche como si un camión te hubiese pasado por encima.</p>
-      <a href="#registro" class="bb-cue" aria-label="Regístrate aquí, el formulario está más abajo">
+  <section class="bb-hero" style="padding: clamp(24px, 4vw, 48px) 24px 24px; display: flex; justify-content: center; background: #F6F2E7;">
+    <div class="bb-hero-in" style="width: 100%; max-width: 900px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px;">
+      <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: #2F6B4A;"><span style="white-space: nowrap;">En vivo y gratis ·</span> <span style="white-space: nowrap;">Jueves 22 de octubre ·</span> <span style="white-space: nowrap;">7:00 p. m. hora Colombia</span></span>
+      <h1 style="margin: 0; font-size: clamp(26px, 6.8vw, 54px); font-weight: 700; line-height: 1.12; letter-spacing: -0.025em; color: #1F3428; max-width: 860px;">Clase de salud cerebral para empresarios, profesionales y personas que quieran tener un <span style="color: #2F6B4A;">alto rendimiento cerebral</span></h1>
+      <p class="bb-hide-sm" style="margin: 4px 0 0; font-size: clamp(18px, 4.8vw, 24px); line-height: 1.35; letter-spacing: -0.015em; color: #3F5145; max-width: 760px; font-weight: 400;">Aprende cómo dejar de reaccionar en automático, procrastinar tus tareas y dejar de llegar a la noche como si un camión te hubiese pasado por encima.</p>
+      <a href="#registro" class="bb-cue bb-hide-sm" aria-label="Regístrate aquí, el formulario está más abajo">
         <span class="bb-cue-label">Regístrate aquí</span>
         <span class="bb-cue-hand" aria-hidden="true">👇</span>
         <svg class="bb-cue-arrow" width="26" height="30" viewBox="0 0 26 30" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2v24"/><path d="M4 18l9 9 9-9"/></svg>
@@ -62,13 +62,13 @@ input::placeholder{color:#8C978E}
     </div>
   </section>
 
-  <section style="padding: 8px 24px 48px; display: flex; justify-content: center; background: #F6F2E7;">
+  <section class="bb-form-wrap" style="padding: 8px 24px 48px; display: flex; justify-content: center; background: #F6F2E7;">
     <form id="registro" style="width: 100%; max-width: 980px; background: #FFFFFF; border-radius: 24px; padding: 28px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px;">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px;">
         <h2 style="margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: #1F3428;">Regístrate gratis</h2>
-        <span style="font-size: 14px; color: #5C6B60;">El acceso te llega por WhatsApp en menos de un minuto.</span>
+        <span class="bb-hide-sm" style="font-size: 14px; color: #5C6B60;">El acceso te llega por WhatsApp en menos de un minuto.</span>
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; align-items: end;">
+      <div class="bb-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; align-items: end;">
         <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0;">
           <label for="nombre" style="font-size: 12px; font-weight: 600; color: #5C6B60;">Nombre</label>
           <input id="nombre" name="nombre" required minlength="2" type="text" placeholder="Tu nombre" style="font-family: inherit; font-size: 17px; padding: 14px 16px; border: 1px solid #D5CDBA; border-radius: 12px; background: #F6F2E7; color: #1F3428; box-sizing: border-box; width: 100%; min-height: 50px;">
