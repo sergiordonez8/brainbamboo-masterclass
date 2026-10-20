@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Dashboard Masterclass · BrainBamboo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#F6F2E7; --surface:#FFFDF8; --surface-2:#FBF7EE; --ink:#1F3428; --ink-2:#4A5A50; --muted:#7C877F;
+  --line:#E7E0CF; --grid:#EEE8DA; --gold:#D2A138; --gold-ink:#8A6414;
+  --s1:#1E7A50; --s2:#B07A12; --s3:#2F6DB0; --s4:#C2452D; --off:#B9B7AE;
+  --good:#1E7A50; --warn:#B07A12; --bad:#C2452D;
+  --radius:18px; --shadow:0 1px 0 rgba(31,52,40,.04),0 8px 24px -12px rgba(31,52,40,.18);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ground);color:var(--ink);font-family:Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+body{font-size:15px;line-height:1.5}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px 64px}
+header.hero{background:var(--ink);color:#F6F2E7;padding:28px 0 92px;position:relative;overflow:hidden}
+header.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(210,161,56,.35),rgba(210,161,56,0) 70%)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.02em;font-size:14px;opacity:.9}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--gold);display:inline-block}
+.hero h1{font-size:clamp(28px,4.4vw,46px);line-height:1.08;margin:18px 0 8px;font-weight:800;letter-spacing:-.02em;max-width:820px}
+.hero h1 em{font-family:Caveat,cursive;font-style:normal;color:var(--gold);font-weight:600;font-size:1.15em}
+.hero p{margin:0;color:#CFD6CF;max-width:760px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(246,242,231,.22);border-radius:999px;padding:5px 12px;font-size:13px;color:#E9E4D6}
+.chip b{color:#fff}
+.chip.alert{border-color:rgba(210,161,56,.7);color:#F3D58F}
+nav.tabs{position:sticky;top:0;z-index:20;background:rgba(31,52,40,.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(246,242,231,.12)}
+nav.tabs .wrap{display:flex;gap:4px;overflow-x:auto;padding-bottom:0;scrollbar-width:none}
+nav.tabs a{flex:none;padding:13px 12px;color:#CFD6CF;text-decoration:none;font-weight:600;font-size:14px;border-bottom:2px solid transparent}
+nav.tabs a:hover{color:#fff;border-color:var(--gold)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:-64px;position:relative;z-index:2}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px}
+.kpi .lab{font-size:13px;color:var(--ink-2);font-weight:600}
+.kpi .val{font-size:34px;font-weight:800;letter-spacing:-.02em;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:13px;color:var(--muted)}
+.kpi .tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:8px}
+.tag.good{background:#E3F1E8;color:#155C3B}.tag.warn{background:#F7ECD3;color:#7A5609}.tag.bad{background:#F7E1DB;color:#9A3320}.tag.neu{background:#EEEAE0;color:var(--ink-2)}
+section{margin-top:44px;scroll-margin-top:64px}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.sh h2{margin:0;font-size:24px;letter-spacing:-.01em}
+.sh p{margin:2px 0 0;color:var(--ink-2);font-size:14px;max-width:720px}
+.eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-ink)}
+.grid{display:grid;gap:14px}.grid>*,.kpis>*{min-width:0}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card h3{margin:0 0 2px;font-size:15px}
+.card .note{font-size:13px;color:var(--muted);margin:0 0 10px}
+/* funnel */
+.funnel{display:flex;flex-direction:column;gap:8px}
+.fstep{display:grid;grid-template-columns:200px 1fr 120px;align-items:center;gap:14px}
+.fstep .fl{font-weight:600;font-size:14px}.fstep .fl small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+.fbar{height:30px;background:var(--surface-2);border-radius:8px;position:relative;overflow:hidden}
+.fbar span{position:absolute;inset:0 auto 0 0;background:var(--ink);border-radius:8px 4px 4px 8px}
+.fbar span.g{background:var(--gold)}
+.fstep .fv{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.fstep .fv small{display:block;font-weight:600;font-size:12px}
+.conv{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+/* tables */
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+.tbl th{font-size:12px;text-align:right;color:var(--ink-2);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--grid);white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl tr.off td{color:var(--muted)}
+.tbl tfoot td{font-weight:700;border-top:1px solid var(--line);border-bottom:0}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+.pill{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;margin-left:6px}
+/* charts */
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:Inter,sans-serif;fill:var(--ink-2);font-size:12px}
+svg .v{fill:var(--ink);font-weight:700}
+.hb{display:flex;flex-direction:column;gap:9px}
+.hbr{display:grid;grid-template-columns:minmax(120px,38%) 1fr 64px;gap:10px;align-items:center;font-size:13px}
+.hbr .t{color:var(--ink);line-height:1.25}
+.hbr .b{height:14px;background:var(--surface-2);border-radius:4px;position:relative}
+.hbr .b span{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--s1)}
+.hbr .n{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.hbr .n small{color:var(--muted);font-weight:500}
+/* controls */
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;font:600 13px Inter,sans-serif;color:var(--ink-2);padding:7px 12px;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--ink);color:#fff}
+.matrix{display:grid;grid-template-columns:110px repeat(3,1fr);gap:6px}
+.matrix .h{font-size:12px;font-weight:700;color:var(--ink-2);display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px}
+.matrix .rh{font-size:12px;font-weight:700;color:var(--ink-2);display:flex;flex-direction:column;justify-content:center}
+.matrix .rh small{font-weight:500;color:var(--muted)}
+.cell{border-radius:12px;padding:12px;text-align:center;border:1px solid var(--line)}
+.cell .s{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.cell .m{font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.big{font-size:42px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.05}
+.insight{border-left:3px solid var(--gold);padding:4px 0 4px 14px;margin:10px 0;color:var(--ink);font-size:14px}
+.insight b{color:var(--ink)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);margin:6px 0 10px}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;font-size:12.5px;padding:8px 10px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.2);opacity:0;transition:opacity .12s;z-index:50;max-width:240px}
+.tip b{color:#F3D58F}
+footer{margin-top:48px;color:var(--muted);font-size:12.5px}
+footer li{margin:4px 0}
+@media (max-width:960px){.kpis,.g4{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr}.g2{grid-template-columns:1fr}}
+@media (max-width:560px){.kpis{grid-template-columns:1fr 1fr;gap:10px}.kpi .val{font-size:26px}.fstep{grid-template-columns:1fr 92px}.fstep .fbar{grid-column:1/-1;grid-row:2}.matrix{grid-template-columns:72px repeat(3,1fr)}.cell .s{font-size:17px}.cell{padding:8px 4px}.big{font-size:32px}.card{padding:16px}}
+</style>
+</head>
+<body>
+<nav class="tabs"><div class="wrap">
+  <a href="#resumen">Resumen</a><a href="#proyecciones">Proyecciones</a><a href="#anuncios">Anuncios</a><a href="#dias">Día a día</a><a href="#whatsapp">WhatsApp y correos</a><a href="#encuesta">Encuesta</a>
+</div></nav>
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><i></i> BrainBamboo · Dra. Alejandra Guerrero</div>
+    <h1>Masterclass Salud Cerebral <em>22 oct</em> · Dashboard del lanzamiento</h1>
+    <p>Pauta en Meta, página, registros, correos, grupos de WhatsApp y encuesta de diagnóstico. Corte: <b id="corte"></b>.</p>
+    <div class="chips" id="chips"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="kpis" id="kpis"></div>
+
+  <section id="resumen">
+    <div class="sh"><div><div class="eyebrow">Embudo completo</div><h2>De la impresión al grupo de WhatsApp</h2>
+      <p>Cada paso con su conversión frente a la meta. Las cifras de Meta están en la zona horaria de la cuenta (GMT+4). Las de la hoja y SendFlow están en hora Colombia.</p></div></div>
+    <div class="card"><div class="funnel" id="funnel"></div><div class="conv" id="conv"></div></div>
+  </section>
+
+  <section id="proyecciones">
+    <div class="sh"><div><div class="eyebrow">Escenarios</div><h2>Proyección de ventas y facturación</h2>
+      <p>Calculado sobre la base que elijas, con precio de US$79 y de US$98. La inversión ya está cerrada: US$999,86.</p></div>
+      <div class="seg" id="baseSeg"><button data-b="reg" class="on">Registrados de la clase</button><button data-b="all">Registrados + comunidad</button></div>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <h3>A. Venta directa sobre los registrados</h3>
+        <p class="note">Si compra el 5%, el 10% o el 15% de la base.</p>
+        <div class="scroll"><table class="tbl" id="tblDirect"></table></div>
+      </div>
+      <div class="card">
+        <h3>B. Asistencia a la clase</h3>
+        <p class="note">Personas en vivo si asiste el 10%, el 15% o el 20% de la base (meta interna: 15%).</p>
+        <div id="attend"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="sh" style="margin-bottom:8px"><div><h3>C. Ventas sobre los asistentes: asistencia × cierre</h3>
+        <p class="note" style="margin:0">Cada celda muestra ventas, facturación y ROAS sobre la inversión en pauta.</p></div>
+        <div class="seg" id="priceSeg"><button data-p="79" class="on">US$79</button><button data-p="98">US$98</button></div></div>
+      <div class="matrix" id="matrix"></div>
+      <div class="insight" id="projInsight"></div>
+    </div>
+  </section>
+
+  <section id="anuncios">
+    <div class="sh"><div><div class="eyebrow">Meta Ads · 15 al 20 oct</div><h2>Cómo funcionó cada anuncio</h2>
+      <p>Activos: AD1, AD2 y AD5. AD3, AD4 y AD6 se apagaron a propósito el 17 oct; se muestra solo su acumulado.</p></div></div>
+    <div class="grid g3">
+      <div class="card"><h3>Inversión por anuncio</h3><p class="note">US$ y participación del gasto</p><div class="hb" id="hbSpend"></div></div>
+      <div class="card"><h3>Leads por anuncio</h3><p class="note">Resultados en Meta · registros en la hoja</p><div class="hb" id="hbLeads"></div></div>
+      <div class="card"><h3>Costo por lead (Meta)</h3><p class="note">Líneas: rentable a US$79 (0,67) y a US$98 (0,83)</p><div id="cplChart"></div></div>
+    </div>
+    <div class="card" style="margin-top:14px"><h3>Todas las métricas por anuncio</h3><p class="note">Costos en US$ (1 USD = 3,6725 AED). Toca una fila para ver el detalle en AED.</p>
+      <div class="scroll"><table class="tbl" id="tblAds"></table></div>
+      <div class="insight" id="adInsight"></div>
+    </div>
+  </section>
+
+  <section id="dias">
+    <div class="sh"><div><div class="eyebrow">Evolución</div><h2>Día a día y efecto del cambio de landing</h2>
+      <p>La nueva landing salió el sáb 17 oct a las 9:15 a. m. hora Colombia, que en Meta cae dentro del día 17.</p></div></div>
+    <div class="grid g2">
+      <div class="card"><h3>Inversión diaria en Meta (US$)</h3><p class="note">Día de la cuenta (GMT+4)</p><div id="chSpend"></div></div>
+      <div class="card"><h3>Conversión de la página por día</h3><p class="note">Leads ÷ visitas a la página, en Meta. Meta del embudo: 50%.</p><div id="chConv"></div></div>
+      <div class="card"><h3>Registros por día (hoja, hora Colombia)</h3><div class="legend"><span><i class="dot" style="background:var(--s1)"></i>Pauta</span><span><i class="dot" style="background:var(--s2)"></i>Orgánico y sin UTM</span></div><div id="chReg"></div></div>
+      <div class="card"><h3>Landing anterior vs. nueva</h3><p class="note">Conversión de la página en Meta</p><div id="landing"></div></div>
+    </div>
+  </section>
+
+  <section id="whatsapp">
+    <div class="sh"><div><div class="eyebrow">Comunidad</div><h2>WhatsApp y correos</h2>
+      <p>SendFlow, campaña «22 Octubre 🧠 Salud Cerebral». Punto de partida: 14 oct, 9:30 p. m. (15 ingresos).</p></div></div>
+    <div class="grid g4" id="waKpis"></div>
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card"><h3>Entradas y salidas por día</h3><div class="legend"><span><i class="dot" style="background:var(--s1)"></i>Ingresaron</span><span><i class="dot" style="background:var(--s4)"></i>Salieron</span></div><div id="chWa"></div></div>
+      <div class="card"><h3>Correos de bienvenida</h3><p class="note">Estado en la columna email_bienvenida de los registros desde el 15 oct</p><div class="hb" id="hbMail"></div>
+        <div class="insight" id="mailInsight"></div></div>
+    </div>
+  </section>
+
+  <section id="encuesta">
+    <div class="sh"><div><div class="eyebrow">Test de diagnóstico</div><h2>¿Qué público tenemos?</h2>
+      <p id="surveyIntro"></p></div></div>
+    <div class="grid g4" id="sKpis"></div>
+    <div class="card" style="margin-top:14px"><h3>Lectura rápida</h3><div id="sInsights"></div></div>
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card"><h3>Perfil del diagnóstico</h3><p class="note">Resultado del test</p><div class="hb" id="sPerfil"></div></div>
+      <div class="card"><h3>Dolor principal</h3><p class="note">Lo que más les pesa hoy</p><div class="hb" id="sDolor"></div></div>
+      <div class="card"><h3>Ocupación</h3><div class="hb" id="sOcu"></div></div>
+      <div class="card"><h3>Ingreso mensual</h3><div class="hb" id="sIng"></div></div>
+      <div class="card"><h3>Edad</h3><div class="hb" id="sEdad"></div></div>
+      <div class="card"><h3>Hace cuánto tienen el problema</h3><div class="hb" id="sTiempo"></div></div>
+      <div class="card"><h3>¿Cuándo empezaría?</h3><div class="hb" id="sCuando"></div></div>
+      <div class="card"><h3>¿Cuánto invertiría?</h3><div class="hb" id="sInv"></div></div>
+      <div class="card"><h3>Qué han intentado</h3><p class="note">Selección múltiple, % sobre quienes respondieron</p><div class="hb" id="sInt"></div></div>
+      <div class="card"><h3>Puntajes promedio del test</h3><p class="note">0 a 100: a mayor puntaje, más afectada la dimensión</p><div class="hb" id="sScores"></div></div>
+    </div>
+    <div class="card" style="margin-top:14px"><h3>Ingreso × disposición a invertir</h3><p class="note">Número de personas</p><div class="scroll"><table class="tbl" id="tblX"></table></div></div>
+  </section>
+
+  <footer>
+    <b>Fuentes y notas</b>
+    <ul id="notes"></ul>
+  </footer>
+</main>
+<div class="tip" id="tip"></div>
+
+<script>
+const FX=3.6725;
+const D={
+ corte:"20 oct 2026, 9:40 a. m. hora Colombia",
+ limitAED:3672, planAED:{"15":349,"16":624,"17":863,"18":863,"19":624,"20":349},
+ proyBase:2140, comunidad:1140,
+ ads:[
+  {n:"AD5-lider",on:true,c:"var(--s1)",spend:3223.10,imp:203217,reach:145980,res:1229,clicks:5087,ctr:2.50,lpvr:90.17,lpv:4587,cpc:0.63,cpm:15.86,cplpv:0.70,cpr:2.62},
+  {n:"AD2-gerente",on:true,c:"var(--s2)",spend:322.52,imp:16401,reach:13577,res:128,clicks:357,ctr:2.18,lpvr:91.04,lpv:325,cpc:0.90,cpm:19.66,cplpv:0.99,cpr:2.52},
+  {n:"AD1-empresario",on:true,c:"var(--s3)",spend:70.38,imp:2798,reach:2391,res:17,clicks:44,ctr:1.57,lpvr:86.36,lpv:38,cpc:1.60,cpm:25.15,cplpv:1.85,cpr:4.14},
+  {n:"AD3-mama",on:false,c:"var(--off)",spend:47.21,imp:1491,reach:1328,res:7,clicks:28,ctr:1.88,lpvr:82.14,lpv:23,cpc:1.69,cpm:31.66,cplpv:2.05,cpr:6.74},
+  {n:"AD6-meditacion",on:false,c:"var(--off)",spend:6.03,imp:310,reach:277,res:3,clicks:5,ctr:1.61,lpvr:120.00,lpv:6,cpc:1.21,cpm:19.45,cplpv:1.00,cpr:2.01},
+  {n:"AD4-emprendedor",on:false,c:"var(--off)",spend:2.76,imp:158,reach:138,res:1,clicks:4,ctr:2.53,lpvr:100.00,lpv:4,cpc:0.69,cpm:17.47,cplpv:0.69,cpr:2.76}
+ ],
+ days:[
+  {d:"15",l:"Jue 15",spend:145.51,imp:4419,reach:3533,res:39,clicks:111,ctr:2.51,lpv:86,cpm:32.93},
+  {d:"16",l:"Vie 16",spend:626.73,imp:30989,reach:24189,res:268,clicks:872,ctr:2.81,lpv:736,cpm:20.22},
+  {d:"17",l:"Sáb 17",spend:658.22,imp:32200,reach:26333,res:228,clicks:865,ctr:2.69,lpv:778,cpm:20.44},
+  {d:"18",l:"Dom 18",spend:855.38,imp:43445,reach:38599,res:302,clicks:1176,ctr:2.71,lpv:1095,cpm:19.69},
+  {d:"19",l:"Lun 19",spend:930.49,imp:67450,reach:60181,res:367,clicks:1634,ctr:2.42,lpv:1486,cpm:13.80},
+  {d:"20",l:"Mar 20",spend:455.67,imp:45873,reach:43899,res:181,clicks:867,ctr:1.89,lpv:802,cpm:9.93}
+ ],
+ wa:{clicks:1328,ingresaron:1121,salieron:72,participantes:2371,admins:25,leads:2346,grupos:7,llenos:3,disponibles:4,base:15,
+     dias:[["15",129,113,0],["16",244,203,1],["17",201,169,0],["18",368,315,3],["19",322,250,35],["20",53,56,33]]},
+ S:{"reg_total": 1503, "reg_paid": 1318, "reg_org": 185, "reg_last": "20/10 07:45", "paid_by_ad": {"AD5-lider": 1146, "AD4-emprendedor": 1, "AD1-empresario": 17, "AD3-mama": 10, "AD2-gerente": 123, "AD6-meditacion": 3, "{{ad.name}}": 18}, "reg_by_day": [["2026-10-15", 166, 12], ["2026-10-16", 271, 21], ["2026-10-17", 212, 16], ["2026-10-18", 413, 65], ["2026-10-19", 241, 58], ["2026-10-20", 15, 13]], "org_by_canal": {"Meta sin UTM": 117, "WhatsApp": 1, "Email": 2, "Instagram": 65}, "emails": {"previo": 985, "enviado": 492, "duplicado": 24, "sin correo": 2}, "survey_n": 220, "s_ocupacion": [["Empleado o empleada", 76], ["Otro", 47], ["Profesional independiente", 42], ["Gerente, director o cargo ejecutivo", 27], ["Soy empresario o dueño de negocio", 14], ["Estoy empezando a emprender", 9], ["Estudio", 5]], "s_ingreso": [["Menos de USD 500", 58], ["Prefiero no decirlo", 55], ["USD 500 a 1.500", 51], ["USD 1.500 a 3.000", 38], ["USD 3.000 a 6.000", 16], ["Más de USD 6.000", 2]], "s_edad": [["55 o más", 74], ["35 a 44", 62], ["45 a 54", 55], ["25 a 34", 23], ["18 a 24", 6]], "s_dolor": [["Reacciono en automático y luego me arrepiento", 49], ["No logro apagar la cabeza para descansar", 44], ["Aplazo justo lo más importante", 41], ["Me cuesta concentrarme y recordar", 37], ["Siento que funciono, pero no disfruto", 22], ["Otro", 18], ["Llego a la noche con el cerebro quemado", 9]], "s_tiempo": [["Más de 3 años", 80], ["Entre 3 y 12 meses", 70], ["Entre 1 y 3 años", 51], ["Menos de 3 meses", 19]], "s_cuando_empezaria": [["Esta misma semana", 80], ["Por ahora solo quiero la información gratuita", 79], ["Este mes", 41], ["En unos meses", 12], ["Otro", 8]], "s_inversion": [["Por ahora nada", 122], ["Menos de USD 50", 67], ["Entre USD 50 y 150", 29], ["Entre USD 150 y 300", 2]], "s_categoria": [["B", 116], ["C", 81], ["A", 23]], "s_perfil": [["Cabeza dispersa", 76], ["Batería en rojo", 60], ["Modo alarma", 43], ["Motor que no se apaga", 41]], "s_intentado": [["Ejercicio", 107], ["Cursos, libros o pódcasts", 84], ["Meditación o apps de bienestar", 60], ["Suplementos", 51], ["Terapia o acompañamiento profesional", 48], ["Nada todavía", 47], ["Otro", 23]], "avg_calidad_0_100": 53.1, "avg_energia_p": 51.8, "avg_reaccion_p": 50.9, "avg_enfoque_p": 60.1, "avg_descanso_p": 60.3, "avg_nivel_freno_p": 55.8, "s_hot": 57, "s_by_ad": [["Sin respuesta", 100], ["AD5-lider", 83], ["dra_alejandra", 15], ["AD2-gerente", 13], ["AD1-empresario", 3], ["AD3-mama", 3], ["{{ad.name}}", 3]], "x_ing_inv": {"Prefiero no decirlo": {"Por ahora nada": 42, "Menos de USD 50": 9, "Entre USD 50 y 150": 4}, "Menos de USD 500": {"Menos de USD 50": 23, "Por ahora nada": 32, "Entre USD 50 y 150": 3}, "USD 1.500 a 3.000": {"Por ahora nada": 17, "Menos de USD 50": 11, "Entre USD 50 y 150": 10}, "USD 500 a 1.500": {"Por ahora nada": 24, "Menos de USD 50": 19, "Entre USD 50 y 150": 8}, "USD 3.000 a 6.000": {"Por ahora nada": 7, "Menos de USD 50": 4, "Entre USD 150 y 300": 2, "Entre USD 50 y 150": 3}, "Más de USD 6.000": {"Entre USD 50 y 150": 1, "Menos de USD 50": 1}}}
+
+};
+const S=D.S;
+const nf=(x,d=0)=>x.toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d});
+const usd=(aed,d=2)=>'US$'+nf(aed/FX,d);
+const pct=(x,d=1)=>nf(x*100,d)+'%';
+const $=id=>document.getElementById(id);
+const tip=$('tip');
+function bindTip(el,html){el.addEventListener('mousemove',e=>{tip.innerHTML=html;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-250);tip.style.left=x+'px';tip.style.top=(e.clientY+14)+'px'});el.addEventListener('mouseleave',()=>tip.style.opacity=0)}
+
+// ===== derived
+const spend=D.ads.reduce((a,b)=>a+b.spend,0);
+const res=D.ads.reduce((a,b)=>a+b.res,0), clicks=D.ads.reduce((a,b)=>a+b.clicks,0), lpv=D.ads.reduce((a,b)=>a+b.lpv,0), imp=D.ads.reduce((a,b)=>a+b.imp,0);
+const reg=S.reg_total, regPaid=S.reg_paid, regOrg=S.reg_org;
+const totalLeads=reg+D.comunidad;
+const waNew=D.wa.ingresaron-D.wa.base;
+const pageConv=res/lpv, waConv=waNew/reg;
+
+$('corte').textContent=D.corte;
+$('chips').innerHTML=[
+ `<span class="chip alert">● Pauta cerrada: llegó al límite de gasto (${nf(spend,2)} de ${nf(D.limitAED)} AED)</span>`,
+ `<span class="chip">Clase: <b>jue 22 oct, 7:00 p. m.</b></span>`,
+ `<span class="chip">Cuenta: <b>AED · GMT+4</b></span>`
+].join('');
+
+// ===== KPIs
+const kpi=(lab,val,sub,tag,cls)=>`<div class="card kpi"><div class="lab">${lab}</div><div class="val">${val}</div><div class="sub">${sub}</div>${tag?`<span class="tag ${cls}">${tag}</span>`:''}</div>`;
+$('kpis').innerHTML=[
+ kpi('Inversión total',usd(spend),`${nf(spend,2)} AED · ${pct(spend/D.limitAED,0)} del límite`,'Límite alcanzado','neu'),
+ kpi('Leads totales',nf(totalLeads),`${nf(reg)} registros + ${nf(D.comunidad)} de la comunidad`,`+${pct(totalLeads/D.proyBase-1,0)} vs. proyección de ${nf(D.proyBase)}`,'good'),
+ kpi('Costo por lead (Meta)',usd(spend/res),`${nf(spend/res,2)} AED · ${nf(res)} leads en Meta`,'Entre el rentable a US$79 y a US$98','warn'),
+ kpi('Costo de adquisición por registro',usd(spend/reg),`Inversión ÷ ${nf(reg)} registros (pauta + orgánicos)`,`Pauta en la hoja: ${usd(spend/regPaid)}`,'neu'),
+].join('');
+
+// ===== Funnel
+const steps=[
+ ['Impresiones','Meta',imp,null],
+ ['Clics en el enlace','CTR '+pct(clicks/imp,2),clicks,null],
+ ['Visitas a la página',pct(lpv/clicks,1)+' de los clics',lpv,null],
+ ['Leads en Meta','Cliente potencial',res,null],
+ ['Registros en la hoja',`${nf(regPaid)} pauta · ${nf(regOrg)} orgánicos`,reg,'g'],
+ ['Entraron a los grupos','SendFlow, desde el 14 oct',waNew,'g'],
+ ['Respondieron el test','Diagnóstico',S.survey_n,'g'],
+];
+const fmax=Math.log10(imp);
+$('funnel').innerHTML=steps.map(s=>{const w=Math.max(4,Math.log10(s[2])/fmax*100);return `<div class="fstep"><div class="fl">${s[0]}<small>${s[1]}</small></div><div class="fbar"><span class="${s[3]||''}" style="width:${w}%"></span></div><div class="fv">${nf(s[2])}</div></div>`}).join('')+`<p class="note" style="margin:6px 0 0">Las barras van en escala logarítmica para que se vean todos los pasos.</p>`;
+const ctag=(lab,v,meta)=>`<span class="tag ${v>=meta?'good':'bad'}">${v>=meta?'✓':'▼'} ${lab}: ${pct(v)} · meta ${pct(meta,0)}</span>`;
+$('conv').innerHTML=ctag('Conversión de la página',pageConv,.5)+ctag('Conversión a grupo',waConv,.8)+`<span class="tag neu">Costo por visita: ${usd(spend/lpv)}</span><span class="tag neu">CPC: ${usd(spend/clicks)}</span><span class="tag neu">Respondió el test: ${pct(S.survey_n/reg)}</span>`;
+
+// ===== Projections
+let base='reg', price=79;
+function renderProj(){
+ const B=base==='reg'?reg:totalLeads;
+ $('tblDirect').innerHTML=`<thead><tr><th>Conversión</th><th>Ventas</th><th>Factura US$79</th><th>Factura US$98</th><th>ROAS 79 / 98</th><th>CAC por venta</th></tr></thead><tbody>`+
+  [.05,.10,.15].map(c=>{const v=Math.round(B*c),f1=v*79,f2=v*98,inv=spend/FX;return `<tr><td><b>${nf(c*100)}%</b></td><td><b>${nf(v)}</b></td><td>US$${nf(f1)}</td><td>US$${nf(f2)}</td><td>${nf(f1/inv,1)}× / ${nf(f2/inv,1)}×</td><td>US$${nf(inv/v,2)}</td></tr>`}).join('')+
+  `</tbody><tfoot><tr><td colspan="6" style="text-align:left;font-weight:500;color:var(--muted)">Base: ${nf(B)} ${base==='reg'?'registrados de la clase':'registrados + comunidad'}. Meta interna del embudo: 1% (${nf(Math.round(B*.01))} ventas).</td></tr></tfoot>`;
+ $('attend').innerHTML=[.10,.15,.20].map(a=>{const n=Math.round(B*a);return `<div class="hbr" style="grid-template-columns:70px 1fr 80px;margin:10px 0"><div class="t"><b>${nf(a*100)}%</b>${a===.15?' <span class="pill tag good">meta</span>':''}</div><div class="b" style="height:22px"><span style="width:${a/.2*100}%;background:${a===.15?'var(--s1)':'var(--ink)'}"></span></div><div class="n" style="font-size:18px">${nf(n)}</div></div>`}).join('')+`<p class="note">Personas en vivo, de ${nf(B)}.</p>`;
+ const A=[.10,.15,.20],Cc=[.06,.08,.10];let maxV=Math.round(B*.2*.1);
+ let h=`<div></div>`+Cc.map(c=>`<div class="h">Cierre ${nf(c*100)}%</div>`).join('');
+ A.forEach(a=>{const asis=Math.round(B*a);h+=`<div class="rh">Asiste ${nf(a*100)}%<small>${nf(asis)} personas</small></div>`;
+  Cc.forEach(c=>{const v=Math.round(asis*c),f=v*price,ro=f/(spend/FX);const t=v/maxV;const bg=`rgba(30,122,80,${0.08+t*0.82})`;const dark=t>0.55;
+   h+=`<div class="cell" style="background:${bg};color:${dark?'#fff':'var(--ink)'}"><div class="s">${nf(v)} ventas</div><div class="m" style="color:${dark?'#E3F1E8':'var(--ink-2)'}">US$${nf(f)} · ROAS ${nf(ro,1)}×</div></div>`})});
+ $('matrix').innerHTML=h;
+ const mid=Math.round(Math.round(B*.15)*.08);
+ $('projInsight').innerHTML=`Escenario central (15% asiste, 8% cierra): <b>${nf(mid)} ventas</b> = <b>US$${nf(mid*price)}</b> a US$${price}. El punto de equilibrio de la pauta es <b>${Math.ceil(spend/FX/price)} ventas</b> a US$${price}. Ojo: en la encuesta solo el ${pct((cnt(S.s_inversion,'Entre USD 50 y 150')+cnt(S.s_inversion,'Entre USD 150 y 300'))/S.survey_n,0)} dice que invertiría US$50 o más.`;
+}
+function cnt(arr,k){const f=arr.find(x=>x[0]===k);return f?f[1]:0}
+$('baseSeg').addEventListener('click',e=>{if(!e.target.dataset.b)return;base=e.target.dataset.b;[...$('baseSeg').children].forEach(b=>b.classList.toggle('on',b===e.target));renderProj()});
+$('priceSeg').addEventListener('click',e=>{if(!e.target.dataset.p)return;price=+e.target.dataset.p;[...$('priceSeg').children].forEach(b=>b.classList.toggle('on',b===e.target));renderProj()});
+renderProj();
+
+// ===== Ads
+const hb=(el,rows,fmt,max)=>{max=max||Math.max(...rows.map(r=>r.v));$(el).innerHTML=rows.map((r,i)=>`<div class="hbr" data-i="${i}"><div class="t">${r.l}</div><div class="b"><span style="width:${Math.max(r.v/max*100,r.v>0?1.5:0)}%;background:${r.c||'var(--s1)'}"></span></div><div class="n">${fmt(r)}</div></div>`).join('');
+ [...$(el).children].forEach((n,i)=>rows[i].tip&&bindTip(n,rows[i].tip))};
+hb('hbSpend',D.ads.map(a=>({l:a.n+(a.on?'':' <span class="pill tag neu">apagado</span>'),v:a.spend,c:a.c,tip:`<b>${a.n}</b><br>${nf(a.spend,2)} AED · ${usd(a.spend)}`})),r=>`${usd(r.v,0)}<br><small>${pct(r.v/spend,1)}</small>`);
+const sheetBy=S.paid_by_ad;
+hb('hbLeads',D.ads.map(a=>({l:a.n,v:a.res,c:a.c,tip:`<b>${a.n}</b><br>Meta: ${nf(a.res)} leads<br>Hoja: ${nf(sheetBy[a.n]||0)} registros`})),r=>`${nf(r.v)}<br><small>hoja ${nf(sheetBy[r.l]||0)}</small>`);
+// CPL chart
+(function(){const W=360,H=220,pl=96,pr=40,pt=6,rowH=(H-pt-24)/D.ads.length;const max=2.0;const x=v=>pl+(v/max)*(W-pl-pr);
+ let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Costo por lead por anuncio">`;
+ [0,.5,1,1.5,2].forEach(t=>{s+=`<line x1="${x(t)}" x2="${x(t)}" y1="${pt}" y2="${H-22}" stroke="var(--grid)"/><text x="${x(t)}" y="${H-6}" text-anchor="middle">${nf(t,1)}</text>`});
+ D.ads.forEach((a,i)=>{const v=a.cpr/FX,y=pt+i*rowH+rowH*.22,h=rowH*.56;s+=`<text x="${pl-8}" y="${y+h/2+4}" text-anchor="end">${a.n}</text><rect class="hit" data-i="${i}" x="${pl}" y="${y}" width="${Math.max(2,x(Math.min(v,max))-pl)}" height="${h}" rx="4" fill="${a.c}"/><text class="v" x="${x(Math.min(v,max))+5}" y="${y+h/2+4}">${nf(v,2)}</text>`});
+ [[.67,'79'],[.83,'98']].forEach(([v,l])=>{s+=`<line x1="${x(v)}" x2="${x(v)}" y1="${pt}" y2="${H-22}" stroke="var(--ink)" stroke-dasharray="3 3" stroke-width="1.5"/>`});
+ s+='</svg>';$('cplChart').innerHTML=s;
+ $('cplChart').querySelectorAll('.hit').forEach(r=>{const a=D.ads[r.dataset.i];bindTip(r,`<b>${a.n}</b><br>CPL ${usd(a.cpr)} (${nf(a.cpr,2)} AED)<br>${a.cpr<=2.46?'Bajo el rentable a US$79':a.cpr<=3.05?'Rentable solo a US$98':'Por encima del rentable'}`)})})();
+$('tblAds').innerHTML=`<thead><tr><th>Anuncio</th><th>Estado</th><th>Gasto</th><th>% gasto</th><th>Impresiones</th><th>Alcance</th><th>CPM</th><th>Clics</th><th>CTR</th><th>CPC</th><th>Visitas pág.</th><th>Costo/visita</th><th>Leads Meta</th><th>CPL Meta</th><th>Conv. pág.</th><th>Registros hoja</th><th>CPL hoja</th></tr></thead><tbody>`+
+ D.ads.map(a=>{const sh=sheetBy[a.n]||0;return `<tr class="${a.on?'':'off'}" title="Gasto ${nf(a.spend,2)} AED · CPL ${nf(a.cpr,2)} AED · CPM ${nf(a.cpm,2)} AED"><td><i class="dot" style="background:${a.c}"></i><b>${a.n}</b></td><td>${a.on?'Activo':'Apagado'}</td><td>${usd(a.spend)}</td><td>${pct(a.spend/spend)}</td><td>${nf(a.imp)}</td><td>${nf(a.reach)}</td><td>${usd(a.cpm)}</td><td>${nf(a.clicks)}</td><td>${nf(a.ctr,2)}%</td><td>${usd(a.cpc)}</td><td>${nf(a.lpv)}</td><td>${usd(a.cplpv)}</td><td><b>${nf(a.res)}</b></td><td><b>${usd(a.cpr)}</b></td><td>${pct(a.res/a.lpv)}</td><td>${nf(sh)}</td><td>${sh?usd(a.spend/sh):'—'}</td></tr>`}).join('')+
+ `</tbody><tfoot><tr><td>Total</td><td></td><td>${usd(spend)}</td><td>100%</td><td>${nf(imp)}</td><td>—</td><td>${usd(spend/imp*1000)}</td><td>${nf(clicks)}</td><td>${nf(clicks/imp*100,2)}%</td><td>${usd(spend/clicks)}</td><td>${nf(lpv)}</td><td>${usd(spend/lpv)}</td><td>${nf(res)}</td><td>${usd(spend/res)}</td><td>${pct(res/lpv)}</td><td>${nf(regPaid)}</td><td>${usd(spend/regPaid)}</td></tr></tfoot>`;
+$('adInsight').innerHTML=`<b>AD5-lider</b> cargó el ${pct(3223.10/spend,0)} del presupuesto y trajo el ${pct(1229/res,0)} de los leads, con el mejor CTR (2,50%) y el menor costo por visita. <b>AD2-gerente</b> tiene el CPL más bajo entre los activos (${usd(2.52)}), pero Meta le dio poca entrega. <b>AD1-empresario</b> quedó caro (${usd(4.14)} por lead, por encima del rentable) y con poca entrega. En la hoja hay ${nf(sheetBy['{{ad.name}}']||0)} registros pagados con el macro «{{ad.name}}» sin resolver, así que no se puede saber de qué anuncio vienen.`;
+
+// ===== Daily charts (SVG columns)
+function cols(el,data,{fmt,max,color,ref,refLabel,stack}){const W=560,H=230,pl=44,pr=10,pt=18,pb=28;const n=data.length,bw=(W-pl-pr)/n;max=max||Math.max(...data.map(d=>stack?d.v+d.v2:d.v))*1.15;const y=v=>H-pb-(v/max)*(H-pt-pb);
+ let s=`<svg viewBox="0 0 ${W} ${H}">`;for(let i=0;i<=4;i++){const v=max*i/4;s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${fmt(v,true)}</text>`}
+ data.forEach((d,i)=>{const x=pl+i*bw+bw*.2,w=bw*.6;const c=d.c||color;
+  if(stack){s+=`<rect x="${x}" y="${y(d.v)}" width="${w}" height="${H-pb-y(d.v)}" fill="var(--s1)" rx="0"/><rect x="${x}" y="${y(d.v+d.v2)}" width="${w}" height="${Math.max(0,y(d.v)-y(d.v+d.v2)-2)}" fill="var(--s2)" rx="4"/>`;s+=`<text class="v" x="${x+w/2}" y="${y(d.v+d.v2)-6}" text-anchor="middle">${nf(d.v+d.v2)}</text>`}
+  else{s+=`<rect x="${x}" y="${y(d.v)}" width="${w}" height="${H-pb-y(d.v)}" fill="${c}" rx="4"/><text class="v" x="${x+w/2}" y="${y(d.v)-6}" text-anchor="middle">${fmt(d.v)}</text>`}
+  s+=`<text x="${x+w/2}" y="${H-8}" text-anchor="middle">${d.l}</text><rect class="hit" data-i="${i}" x="${pl+i*bw}" y="${pt}" width="${bw}" height="${H-pt-pb}" fill="transparent"/>`});
+ if(ref!=null){s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(ref)}" y2="${y(ref)}" stroke="var(--ink)" stroke-dasharray="4 4" stroke-width="1.5"/><text x="${W-pr}" y="${y(ref)-6}" text-anchor="end" style="font-weight:700;fill:var(--ink)">${refLabel}</text>`}
+ s+='</svg>';$(el).innerHTML=s;$(el).querySelectorAll('.hit').forEach(r=>data[r.dataset.i].tip&&bindTip(r,data[r.dataset.i].tip))}
+cols('chSpend',D.days.map(d=>({l:d.l,v:d.spend/FX,tip:`<b>${d.l} oct</b><br>${nf(d.spend,2)} AED · ${usd(d.spend)}<br>Plan (día Colombia): ${D.planAED[d.d]} AED<br>CPM ${usd(d.cpm)}`})),{fmt:(v,ax)=>ax?nf(v):'$'+nf(v),color:'var(--ink)'});
+cols('chConv',D.days.map(d=>({l:d.l,v:d.res/d.lpv*100,c:(+d.d>=18?'var(--s1)':+d.d==17?'var(--s2)':'var(--s3)'),tip:`<b>${d.l} oct</b><br>${nf(d.res)} leads ÷ ${nf(d.lpv)} visitas = ${pct(d.res/d.lpv)}<br>Clics ${nf(d.clicks)} · CTR ${nf(d.ctr,2)}%`})),{fmt:(v,ax)=>nf(v,ax?0:1)+'%',max:60,ref:50,refLabel:'Meta 50%'});
+cols('chReg',S.reg_by_day.map(([d,p,o])=>({l:['Jue','Vie','Sáb','Dom','Lun','Mar'][+d.slice(8)-15]+' '+d.slice(8),v:p,v2:o,tip:`<b>${d.slice(8)} oct</b><br>Pauta: ${nf(p)}<br>Orgánico y sin UTM: ${nf(o)}`})),{fmt:(v,ax)=>nf(v),stack:true});
+(function(){const pre=D.days.filter(d=>+d.d<=16),tr=D.days.filter(d=>+d.d==17),post=D.days.filter(d=>+d.d>=18);const r=a=>a.reduce((s,d)=>s+d.res,0)/a.reduce((s,d)=>s+d.lpv,0);
+ const rows=[['Anterior (15–16 oct)',r(pre),'var(--s3)'],['Transición (17 oct)',r(tr),'var(--s2)'],['Nueva (18–20 oct)',r(post),'var(--s1)']];
+ $('landing').innerHTML=rows.map(x=>`<div style="margin:14px 0"><div style="display:flex;justify-content:space-between;font-size:14px;font-weight:600"><span>${x[0]}</span><span class="big" style="font-size:26px">${pct(x[1])}</span></div><div class="fbar" style="height:12px;margin-top:6px"><span style="width:${x[1]*100/0.6}%;background:${x[2]}"></span></div></div>`).join('')+
+ `<div class="insight">La conversión bajó de <b>${pct(r(pre))}</b> a <b>${pct(r(post))}</b> con la nueva landing. Al mismo tiempo Meta escaló AD5 y el CPM cayó de ${usd(32.93)} a ${usd(9.93)}: entró tráfico más amplio y más barato. Por eso esto no prueba que la landing sea peor; el costo por lead se mantuvo en ${usd(2.65,2)}–${usd(2.89,2)} por día desde el 17.</div>`})();
+
+// ===== WhatsApp
+const w=D.wa;
+$('waKpis').innerHTML=[
+ kpi('Leads en los grupos de la clase',nf(w.leads),`${nf(w.participantes)} participantes · ${w.admins} administradores`,'',''),
+ kpi('Entradas nuevas',nf(waNew),`Desde el 14 oct · ${nf(w.clicks)} clics en el enlace`,`Conversión a grupo ${pct(waConv)} · meta 80%`,waConv>=.8?'good':'bad'),
+ kpi('Salieron',nf(w.salieron),`${pct(w.salieron/w.ingresaron)} de los que entraron`,'68 salidas el 19 y 20 oct','warn'),
+ kpi('Grupos',`${w.grupos}`,`${w.llenos} llenos · ${w.disponibles} disponibles`,'Capacidad OK','good'),
+].join('');
+(function(){const W=560,H=230,pl=40,pr=10,pt=18,pb=28,n=w.dias.length,bw=(W-pl-pr)/n,max=360;const y=v=>H-pb-(v/max)*(H-pt-pb);let s=`<svg viewBox="0 0 ${W} ${H}">`;
+ [0,90,180,270,360].forEach(v=>{s+=`<line x1="${pl}" x2="${W-pr}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${pl-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`});
+ w.dias.forEach(([d,c,i,o],k)=>{const x=pl+k*bw+bw*.18,bw2=bw*.3;s+=`<rect x="${x}" y="${y(i)}" width="${bw2}" height="${H-pb-y(i)}" fill="var(--s1)" rx="4"/><rect x="${x+bw2+2}" y="${y(o)}" width="${bw2}" height="${Math.max(0,H-pb-y(o))}" fill="var(--s4)" rx="4"/><text class="v" x="${x+bw2/2}" y="${y(i)-6}" text-anchor="middle">${i}</text>${o?`<text class="v" x="${x+bw2*1.5+2}" y="${y(o)-6}" text-anchor="middle">${o}</text>`:''}<text x="${x+bw2}" y="${H-8}" text-anchor="middle">${d} oct</text><rect class="hit" data-k="${k}" x="${pl+k*bw}" y="${pt}" width="${bw}" height="${H-pt-pb}" fill="transparent"/>`});
+ s+='</svg>';$('chWa').innerHTML=s;$('chWa').querySelectorAll('.hit').forEach(r=>{const [d,c,i,o]=w.dias[r.dataset.k];bindTip(r,`<b>${d} oct</b><br>Clics: ${c}<br>Ingresaron: ${i}<br>Salieron: ${o}`)})})();
+const em=S.emails;
+hb('hbMail',[{l:'Enviado',v:em['enviado']||0,c:'var(--s1)'},{l:'Marcado «previo»',v:em['previo']||0,c:'var(--off)'},{l:'Duplicado',v:em['duplicado']||0,c:'var(--s2)'},{l:'Sin correo',v:em['sin correo']||0,c:'var(--s2)'},{l:'Error',v:em['error']||0,c:'var(--s4)'}],r=>nf(r.v),reg);
+$('mailInsight').innerHTML=`<b>0 errores.</b> ${nf(em['previo']||0)} registros tienen el estado «previo», probablemente de antes de activar el envío automático. Conviene revisarlo antes del recordatorio de la clase.`;
+
+// ===== Survey
+const N=S.survey_n;
+$('surveyIntro').textContent=`${nf(N)} personas respondieron el test (${pct(N/reg)} de los registrados). Todas las cifras son agregadas, sin datos personales.`;
+const sum=(arr,keys)=>keys.reduce((a,k)=>a+cnt(arr,k),0);
+const hot=S.s_hot, invest50=sum(S.s_inversion,['Entre USD 50 y 150','Entre USD 150 y 300']), soon=sum(S.s_cuando_empezaria,['Esta misma semana','Este mes']);
+$('sKpis').innerHTML=[
+ kpi('Respuestas',nf(N),`${pct(N/reg)} de los registrados`,'',''),
+ kpi('Quieren empezar ya',pct(soon/N,0),`${nf(soon)} dicen «esta semana» o «este mes»`,'',''),
+ kpi('Invertirían US$50 o más',pct(invest50/N,0),`${nf(invest50)} personas · el precio es US$79–98`,'Señal de precio','warn'),
+ kpi('Leads calientes',nf(hot),'Quieren empezar ya y tienen algo de presupuesto','Prioridad para venta','good'),
+].join('');
+const share=(arr,k)=>pct(cnt(arr,k)/N,0);
+$('sInsights').innerHTML=[
+ `<div class="insight"><b>Quiénes son:</b> el ${pct(sum(S.s_edad,['35 a 44','45 a 54','55 o más'])/N,0)} tiene 35 años o más, y «55 o más» es el grupo más grande (${share(S.s_edad,'55 o más')}). Hay más empleados (${share(S.s_ocupacion,'Empleado o empleada')}) e independientes (${share(S.s_ocupacion,'Profesional independiente')}) que gerentes (${share(S.s_ocupacion,'Gerente, director o cargo ejecutivo')}) o empresarios (${share(S.s_ocupacion,'Soy empresario o dueño de negocio')}), que son el público de la nueva PUV.</div>`,
+ `<div class="insight"><b>Ingresos:</b> el ${share(S.s_ingreso,'Menos de USD 500')} gana menos de US$500 al mes y el ${share(S.s_ingreso,'Prefiero no decirlo')} prefiere no decirlo. Solo el ${pct(sum(S.s_ingreso,['USD 1.500 a 3.000','USD 3.000 a 6.000','Más de USD 6.000'])/N,0)} gana US$1.500 o más.</div>`,
+ `<div class="insight"><b>Dolores:</b> los cuatro principales están parejos: reaccionar en automático (${share(S.s_dolor,'Reacciono en automático y luego me arrepiento')}), no poder apagar la cabeza (${share(S.s_dolor,'No logro apagar la cabeza para descansar')}), aplazar lo importante (${share(S.s_dolor,'Aplazo justo lo más importante')}) y la falta de concentración y memoria (${share(S.s_dolor,'Me cuesta concentrarme y recordar')}). El ${pct(sum(S.s_tiempo,['Más de 3 años','Entre 1 y 3 años'])/N,0)} lleva más de un año con el problema.</div>`,
+ `<div class="insight"><b>Intención de compra:</b> el ${share(S.s_cuando_empezaria,'Esta misma semana')} empezaría esta misma semana, pero el ${share(S.s_inversion,'Por ahora nada')} no invertiría nada por ahora. La oferta de la clase tiene que justificar US$79–98, o abrir un pago más bajo o en cuotas para el ${share(S.s_inversion,'Menos de USD 50')} que invertiría menos de US$50.</div>`,
+].join('');
+const sh=(el,arr,c,total)=>hb(el,arr.map(([l,v])=>({l,v,c,tip:`<b>${l}</b><br>${nf(v)} personas · ${pct(v/(total||N))}`})),r=>`${pct(r.v/(total||N),0)}<br><small>${nf(r.v)}</small>`);
+sh('sPerfil',S.s_perfil,'var(--ink)');
+sh('sDolor',S.s_dolor,'var(--s4)');
+sh('sOcu',S.s_ocupacion,'var(--s1)');
+const ingOrder=['Menos de USD 500','USD 500 a 1.500','USD 1.500 a 3.000','USD 3.000 a 6.000','Más de USD 6.000','Prefiero no decirlo'];
+sh('sIng',ingOrder.map(k=>[k,cnt(S.s_ingreso,k)]),'var(--s2)');
+sh('sEdad',['18 a 24','25 a 34','35 a 44','45 a 54','55 o más'].map(k=>[k,cnt(S.s_edad,k)]),'var(--s3)');
+sh('sTiempo',['Menos de 3 meses','Entre 3 y 12 meses','Entre 1 y 3 años','Más de 3 años'].map(k=>[k,cnt(S.s_tiempo,k)]),'var(--s3)');
+sh('sCuando',S.s_cuando_empezaria,'var(--s1)');
+sh('sInv',['Por ahora nada','Menos de USD 50','Entre USD 50 y 150','Entre USD 150 y 300'].map(k=>[k,cnt(S.s_inversion,k)]),'var(--s2)');
+sh('sInt',S.s_intentado,'var(--s3)');
+hb('sScores',[['Descanso',S.avg_descanso_p],['Enfoque',S.avg_enfoque_p],['Energía',S.avg_energia_p],['Reacción',S.avg_reaccion_p],['Nivel de freno (total)',S.avg_nivel_freno_p],['Calidad del lead (0–100)',S.avg_calidad_0_100]].map(([l,v])=>({l,v,c:'var(--ink)'})),r=>nf(r.v,1),100);
+const invCols=['Por ahora nada','Menos de USD 50','Entre USD 50 y 150','Entre USD 150 y 300'];
+$('tblX').innerHTML=`<thead><tr><th>Ingreso</th>${invCols.map(c=>`<th>${c}</th>`).join('')}<th>Total</th></tr></thead><tbody>`+ingOrder.map(k=>{const r=S.x_ing_inv[k]||{};const t=invCols.reduce((a,c)=>a+(r[c]||0),0);return `<tr><td>${k}</td>${invCols.map(c=>{const v=r[c]||0;return `<td style="background:rgba(176,122,18,${v/60*0.5})">${v||'·'}</td>`}).join('')}<td><b>${t}</b></td></tr>`}).join('')+`</tbody>`;
+
+// ===== notes
+$('notes').innerHTML=[
+ 'Meta Ads: cuenta 400411443881366, campaña «BC | Masterclass 22 oct | Leads | CO», del 15 al 20 oct, leída en el Administrador de anuncios. Atribución: 7 días tras clic, 1 día tras visualización o interacción.',
+ 'Registros: hoja «Registros», desde el 15 oct a las 5:00 a. m. hora Colombia. Último registro: '+S.reg_last+'. «Orgánico» incluye '+nf(S.org_by_canal['Meta sin UTM']||0)+' registros que la hoja marca «Meta sin UTM».',
+ 'Comunidad: 1.140 personas (dato de Sergio, 14 oct). Es otro grupo de WhatsApp, fuera de SendFlow.',
+ 'WhatsApp: SendFlow, vista general de la campaña, leída hoy. Los «leads en grupos» que reporta SendFlow ('+nf(w.leads)+') superan las entradas registradas; puede incluir personas añadidas por otra vía.',
+ 'Encuesta: pestaña «Diagnosticos» ('+nf(N)+' respuestas). No se publican nombres, correos ni teléfonos.',
+ 'Proyecciones: son escenarios, no pronósticos. Tasa de cambio: 1 USD = 3,6725 AED.'
+].map(x=>`<li>${x}</li>`).join('');
+</script>
+</body>
+</html>
